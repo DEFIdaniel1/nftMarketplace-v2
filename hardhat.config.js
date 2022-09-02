@@ -1,4 +1,5 @@
 require('@nomiclabs/hardhat-waffle')
+require('ethers')
 
 module.exports = {
     solidity: '0.8.4',
