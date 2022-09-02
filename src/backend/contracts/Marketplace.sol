@@ -8,6 +8,9 @@ import '@openzeppelin/contracts/access/Ownable.sol';
 
 error Marketplace__FeePercentTooHigh();
 error Marketplace__PriceMustBeMoreThanZero();
+error Marketplace__TokenDoesNotExist();
+error Marketplace__NotEnoughEth();
+error Marketplace__ItemAlreadySold();
 
 contract Marketplace is ReentrancyGuard, Ownable {
 
@@ -26,6 +29,7 @@ contract Marketplace is ReentrancyGuard, Ownable {
         address payable seller;
         bool sold;
     }
+
     event Listing(
         uint itemId,
         IERC721 indexed nft,
@@ -33,6 +37,15 @@ contract Marketplace is ReentrancyGuard, Ownable {
         uint price, 
         address indexed seller
     );
+        event Purchased(
+        uint itemId,
+        IERC721 indexed nft,
+        uint tokenId,
+        uint price, 
+        address indexed seller,
+        address indexed buyer
+    );
+
     // itemId => Item
     mapping(uint => Item) public itemsMap;
 
@@ -84,17 +97,43 @@ contract Marketplace is ReentrancyGuard, Ownable {
         );
     }
 
-    function purchaseItem() external payable nonReentrant {}
-
+    function purchaseItem(uint _itemId) external payable nonReentrant {
+        uint totalPrice = getTotalPrice(_itemId);
+        Item storage item = itemsMap[_itemId];
+        if(_itemId > 0 && _itemId <= s_itemCount){
+            revert Marketplace__TokenDoesNotExist();
+        }
+        if(msg.value >= totalPrice){
+            revert Marketplace__NotEnoughEth();
+        }
+        if(item.sold){
+            revert Marketplace__ItemAlreadySold();
+        }
+        i_feeAccount.transfer(totalPrice - item.price);
+        item.seller.transfer(item.price);
+        item.sold = true;
+        // Last step, transfer NFT
+        item.nft.safeTransferFrom(address(this), msg.sender, item.tokenId);
+        emit Purchased(_itemId, item.nft, item.tokenId, item.price, item.seller, msg.sender);
+    }
 
     /////////////////////
-    // VIEW FUNCTIONS // 
+    // VIEW & PURE FUNCTIONS // 
     ////////////////////
-    function getItemsMap(uint _itemCount) public view returns (Item memory) {
-        return itemsMap[_itemCount];
+    function getItemsMap(uint _itemId) public view returns (Item memory) {
+        return itemsMap[_itemId];
     }
     function getTotalPrice(uint _itemId) view public returns(uint){
-        uint totalPrice = (itemsMap[_itemId].price * (s_feePercent/100)) + itemsMap[_itemId].price;
+        uint totalPrice = (itemsMap[_itemId].price*(100 + s_feePercent)/100);
         return totalPrice;
+    }
+    function getFeePercent() view public returns(uint) {
+        return s_feePercent;
+    }
+    function getFeeAccount() view public returns(address){
+        return address(i_feeAccount);
+    }
+    function getFeeAccountBalance() view public returns(uint){
+        return i_feeAccount.balance;
     }
 }
