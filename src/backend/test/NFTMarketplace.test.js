@@ -1,15 +1,11 @@
 const { expect, assert } = require('chai')
-const { ethers, BigNumber } = require('hardhat')
+const { ethers } = require('hardhat')
 
 describe('NFT Marketplace', function () {
     let deployer, account1, account2, nftContract, marketplaceContract
     let feePercent = 5
     let testURI = 'URI'
     let testURI2 = 'another URI'
-
-    const fromWei = (value) => {
-        ethers.utils.formatEther(value)
-    }
 
     beforeEach(async function () {
         const nftFactory = await ethers.getContractFactory('NFT')
