@@ -1,11 +1,16 @@
-const { expect } = require('chai')
-const { ethers } = require('hardhat')
+const { expect, assert } = require('chai')
+const { ethers, BigNumber } = require('hardhat')
 
 describe('NFT Marketplace', function () {
     let deployer, account1, account2, nftContract, marketplaceContract
     let feePercent = 5
     let testURI = 'URI'
     let testURI2 = 'another URI'
+
+    const fromWei = (value) => {
+        ethers.utils.formatEther(value)
+    }
+
     beforeEach(async function () {
         const nftFactory = await ethers.getContractFactory('NFT')
         const marketplaceFactory = await ethers.getContractFactory('Marketplace')
@@ -94,6 +99,73 @@ describe('NFT Marketplace', function () {
                 marketplaceContract,
                 'Marketplace__PriceMustBeMoreThanZero'
             )
+        })
+    })
+    describe('purchaseNFT', function () {
+        let tokenId = 1
+        let itemId = 1
+        let totalPrice
+        const price = ethers.utils.parseEther('1')
+        beforeEach(async function () {
+            await nftContract.connect(account1).mint(testURI)
+            await nftContract.connect(account1).approve(marketplaceContract.address, tokenId)
+            await marketplaceContract.connect(account1).listNFT(nftContract.address, tokenId, price)
+            totalPrice = await marketplaceContract.getTotalPrice(tokenId)
+            await marketplaceContract.connect(account2)
+        })
+        it('Update item as sold', async function () {
+            await marketplaceContract.purchaseNFT(itemId, { value: totalPrice })
+            const item = await marketplaceContract.getItemsMap(itemId)
+            expect(item.sold).to.equal(true)
+        })
+        it('Pay correct fees to the seller', async function () {
+            const sellerInitialBal = await account1.getBalance()
+            const expectedValue = sellerInitialBal.add(price)
+
+            await marketplaceContract.purchaseNFT(itemId, { value: totalPrice })
+            const sellerFinalBal = await account1.getBalance()
+            assert.equal(expectedValue.toString(), sellerFinalBal.toString())
+        })
+        it('Pay correct fees to the contract', async function () {
+            const feeInitialBal = await deployer.getBalance()
+            const newFee = totalPrice.sub(price)
+            const expectedBalance = feeInitialBal.add(newFee)
+
+            await marketplaceContract.connect(account2).purchaseNFT(itemId, { value: totalPrice })
+            const feeFinalBal = await deployer.getBalance()
+            assert.equal(expectedBalance.toString(), feeFinalBal.toString())
+        })
+        it('Emits Purchased event with correct args', async function () {
+            await expect(
+                marketplaceContract.connect(account2).purchaseNFT(itemId, { value: totalPrice })
+            )
+                .to.emit(marketplaceContract, 'Purchased')
+                .withArgs(
+                    itemId,
+                    nftContract.address,
+                    tokenId,
+                    price,
+                    account1.address,
+                    account2.address
+                )
+        })
+        it('Reverts if not enough ETH', async function () {
+            await expect(
+                marketplaceContract
+                    .connect(account2)
+                    .purchaseNFT(itemId, { value: totalPrice.sub(1) })
+            ).to.revertedWithCustomError(marketplaceContract, 'Marketplace__NotEnoughEth')
+        })
+        it('Reverts if NFT has been purchased', async function () {
+            await marketplaceContract.connect(deployer).purchaseNFT(itemId, { value: totalPrice })
+            await expect(
+                marketplaceContract.connect(account2).purchaseNFT(itemId, { value: totalPrice })
+            ).to.revertedWithCustomError(marketplaceContract, 'Marketplace__ItemAlreadySold')
+        })
+        it('Reverts token listing does not exist', async function () {
+            await expect(
+                marketplaceContract.connect(account2).purchaseNFT(1000, { value: totalPrice })
+            ).to.revertedWithCustomError(marketplaceContract, 'Marketplace__TokenDoesNotExist')
         })
     })
 })

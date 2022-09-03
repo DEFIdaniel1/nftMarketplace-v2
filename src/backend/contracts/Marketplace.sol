@@ -17,7 +17,7 @@ contract Marketplace is ReentrancyGuard, Ownable {
     /////////////////////
     // STATE VARIABLES //
     /////////////////////
-    address payable public immutable i_feeAccount; //account that receives marketplace fees
+    address payable public immutable i_feeAccount; //account that receives marketplace fees -> contract owner
     uint public s_feePercent; // fee percentage on marketplace sales
     uint public s_itemCount; // tracks listed items
 
@@ -97,13 +97,13 @@ contract Marketplace is ReentrancyGuard, Ownable {
         );
     }
 
-    function purchaseItem(uint _itemId) external payable nonReentrant {
+    function purchaseNFT(uint _itemId) external payable nonReentrant {
         uint totalPrice = getTotalPrice(_itemId);
         Item storage item = itemsMap[_itemId];
-        if(_itemId > 0 && _itemId <= s_itemCount){
+        if(_itemId == 0 || _itemId > s_itemCount){
             revert Marketplace__TokenDoesNotExist();
         }
-        if(msg.value >= totalPrice){
+        if(msg.value < totalPrice){
             revert Marketplace__NotEnoughEth();
         }
         if(item.sold){
