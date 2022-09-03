@@ -17,6 +17,7 @@ describe('NFT Marketplace', function () {
         nftContract = await nftFactory.deploy()
         marketplaceContract = await marketplaceFactory.deploy(feePercent)
     })
+
     describe('Deployment', function () {
         it('Should initialize correct NFT name and symbol', async function () {
             expect(await nftContract.name()).to.equal('Megaladon')
@@ -27,6 +28,7 @@ describe('NFT Marketplace', function () {
             expect(await marketplaceContract.i_feeAccount()).to.equal(deployer.address)
         })
     })
+
     describe('feeChange', function () {
         it('Reverts if feePercent is changed higher than 10', async function () {
             await expect(marketplaceContract.feeChange(11)).to.be.revertedWithCustomError(
@@ -40,6 +42,7 @@ describe('NFT Marketplace', function () {
             expect(await marketplaceContract.s_feePercent()).to.equal(newFee)
         })
     })
+
     describe('Mint NFT', function () {
         it('Should track each minted NFT', async function () {
             // account1 to mint NFT
@@ -54,6 +57,7 @@ describe('NFT Marketplace', function () {
             expect(await nftContract.tokenURI(2)).to.equal(testURI2)
         })
     })
+
     describe('listNFT marketplace function', function () {
         let tokenId = 1
         let itemId = 1
@@ -97,6 +101,7 @@ describe('NFT Marketplace', function () {
             )
         })
     })
+
     describe('purchaseNFT', function () {
         let tokenId = 1
         let itemId = 1
