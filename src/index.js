@@ -1,13 +1,19 @@
-import { render } from "react-dom";
-import 'bootstrap/dist/css/bootstrap.css'
-import App from './frontend/components/App';
-import * as serviceWorker from './serviceWorker';
+import { render } from 'react-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import App from '../src/frontend/components/App'
+import Buy from '../src/frontend/components/Buy'
+import Mint from '../src/frontend/components/Mint'
+import Navbar from '../src/frontend/components/Navbar'
 
-const rootElement = document.getElementById("root");
-render( <App />, rootElement);
-
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+render(
+    <BrowserRouter>
+        <Navbar />
+        <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="mint" element={<Mint />} />
+            <Route path="buy" element={<Buy />} />
+            <Route path="/*" element={<App />} />
+        </Routes>
+    </BrowserRouter>,
+    document.getElementById('root')
+)
