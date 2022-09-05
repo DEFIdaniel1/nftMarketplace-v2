@@ -142,4 +142,8 @@ contract Marketplace is ReentrancyGuard, Ownable {
     function getFeeAccountBalance() public view returns (uint256) {
         return i_feeAccount.balance;
     }
+
+    function getItemCount() public view returns (uint256) {
+        return s_itemCount;
+    }
 }
