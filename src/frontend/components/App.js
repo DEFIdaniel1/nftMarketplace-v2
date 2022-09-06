@@ -5,7 +5,7 @@ import './App.scss'
 
 import Navbar from './Navbar'
 import Mint from './Mint'
-import Buy from './Buy'
+// import Buy from './Buy'
 import Home from './Home'
 import LoadingSpinner from './LoadingSpinner'
 
@@ -26,6 +26,7 @@ function App() {
         // 1st account listed is the one connected to the app
         setAccount(accounts[0])
         const provider = new ethers.providers.Web3Provider(window.ethereum)
+        await provider.send('eth_requestAccounts', []) // Metamask requires requesting permissions to connect
         const signer = provider.getSigner()
         setLoading(false)
         loadContracts(signer)
@@ -52,9 +53,12 @@ function App() {
                 {!loading && (
                     <Routes>
                         <Route path="/" element={<Home marketplace={marketplace} nft={nft} />} />
-                        <Route path="mint" element={<Mint />} />
-                        <Route path="buy" element={<Buy />} />
-                        <Route path="/*" element={<Home />} />
+                        <Route
+                            path="mint"
+                            element={<Mint marketplace={marketplace} nft={nft} account={account} />}
+                        />
+                        {/* <Route path="buy" element={<Buy />} /> */}
+                        <Route path="/*" element={<Home marketplace={marketplace} nft={nft} />} />
                     </Routes>
                 )}
             </BrowserRouter>

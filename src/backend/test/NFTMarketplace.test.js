@@ -44,7 +44,7 @@ describe('NFT Marketplace', function () {
     })
 
     describe('Mint NFT', function () {
-        it('Should track each minted NFT', async function () {
+        it.only('Should track each minted NFT', async function () {
             // account1 to mint NFT
             await nftContract.connect(account1).mint(testURI)
             expect(await nftContract.tokenCount()).to.equal(1)

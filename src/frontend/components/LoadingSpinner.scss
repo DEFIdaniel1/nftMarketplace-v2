@@ -10,13 +10,13 @@
     right: 0;
     bottom: 0;
     margin: auto;
-    border: 3px solid rgba(255, 255, 255, 0.3);
+    border: 3px solid transparent;
     border-top-color: lightblue;
-    border-right-color: lightgreen;
-    border-bottom-color: yellow;
-    border-left-color: pink;
+    // border-right-color: yellow;
+    border-bottom-color: lightgreen;
+    // border-left-color: pink;
     border-radius: 50%;
-    animation: loading-spinner 1s infinite linear;
+    animation: loading-spinner 1.5s infinite linear;
 }
 
 @keyframes loading-spinner {
