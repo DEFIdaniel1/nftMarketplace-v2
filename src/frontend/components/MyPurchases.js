@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import LoadingSpinner from './LoadingSpinner'
+import { ethers } from 'ethers'
 
 const MyPurchases = ({ marketplace, nft, account }) => {
     const [loading, setLoading] = useState(true)
@@ -8,7 +9,6 @@ const MyPurchases = ({ marketplace, nft, account }) => {
     const loadPurchasedItems = async () => {
         setLoading(true)
         // filter EVENT
-        console.log('starting load')
         const filter = marketplace.filters.Purchased(null, null, null, null, null, account)
         const results = await marketplace.queryFilter(filter)
         // use Promise.all b/c multiple async functions will be performed
@@ -26,7 +26,7 @@ const MyPurchases = ({ marketplace, nft, account }) => {
                     name: metadata.name,
                     description: metadata.description,
                     image: metadata.image,
-                    // seller: i.buyer,
+                    seller: i.seller,
                 }
                 return purchasedItem
             })
@@ -36,7 +36,7 @@ const MyPurchases = ({ marketplace, nft, account }) => {
     }
     useEffect(() => {
         loadPurchasedItems()
-    }, [marketplace])
+    }, [marketplace, nft])
 
     if (loading) {
         return (
@@ -46,7 +46,29 @@ const MyPurchases = ({ marketplace, nft, account }) => {
             </div>
         )
     }
-    return <div>My Purchases</div>
+    return (
+        <div>
+            {purchases.length > 0 && (
+                <div>
+                    <h1>My Purchases</h1>
+                    {purchases.map((item, idx) => (
+                        <div key={idx}>
+                            <h3>{item.name}</h3>
+                            <div className="imgDiv">
+                                <img src={item.image} alt={`NFT ${item.name}`} />
+                            </div>
+                            <p>{item.description}</p>
+                            <h3>Price: {ethers.utils.formatEther(item.totalPrice)} ETH</h3>
+                            <p>
+                                Seller: {item.seller.slice(0, 4)}...
+                                {item.seller.slice(item.seller.length - 4)}
+                            </p>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    )
 }
 
 export default MyPurchases

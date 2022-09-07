@@ -70,6 +70,10 @@ const Home = ({ marketplace, nft, itemCount }) => {
                             </div>
                             <p>{item.description}</p>
                             <h3>Price: {ethers.utils.formatEther(item.totalPrice)} ETH</h3>
+                            <p>
+                                Seller: {item.seller.slice(0, 4)}...
+                                {item.seller.slice(item.seller.length - 4)}
+                            </p>
                             <button onClick={() => buyMarketItem(item)}>Buy NFT</button>
                         </div>
                     ))}
@@ -86,6 +90,10 @@ const Home = ({ marketplace, nft, itemCount }) => {
                             </div>
                             <p>{item.description}</p>
                             <h3>Sale Price: {ethers.utils.formatEther(item.totalPrice)} ETH</h3>
+                            <p>
+                                Seller: {item.seller.slice(0, 4)}...
+                                {item.seller.slice(item.seller.length - 4)}
+                            </p>
                         </div>
                     ))}
                 </div>
