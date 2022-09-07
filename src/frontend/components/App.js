@@ -53,7 +53,9 @@ function App() {
         <div>
             <BrowserRouter>
                 <Navbar connectWallet={web3Handler} account={account} />
-                {loading && <LoadingSpinner />}
+                {loading && (
+                    <LoadingSpinner title="Click 'Connect'" subtitle="load your web3 wallet..." />
+                )}
                 {!loading && (
                     <Routes>
                         <Route

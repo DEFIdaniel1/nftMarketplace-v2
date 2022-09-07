@@ -1,12 +1,12 @@
 import React from 'react'
 import './LoadingSpinner.scss'
 
-const LoadingSpinner = () => {
+const LoadingSpinner = ({ title, subtitle }) => {
     return (
         <div className="loadingBox">
-            <h1>Click "Connect"</h1>
+            <h1>{title}</h1>
             <div id="spinner"></div>
-            <h2>load your web3 wallet...</h2>
+            <h2>{subtitle}</h2>
         </div>
     )
 }

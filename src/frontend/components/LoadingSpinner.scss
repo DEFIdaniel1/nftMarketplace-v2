@@ -1,3 +1,5 @@
+@import '../variables';
+
 .loadingBox {
     text-align: center;
 }
@@ -11,17 +13,20 @@
     bottom: 0;
     margin: auto;
     border: 3px solid transparent;
-    border-top-color: lightblue;
-    // border-right-color: yellow;
-    border-bottom-color: lightgreen;
-    // border-left-color: pink;
+    border-top-color: $blue-bright;
+    border-bottom-color: $purple;
     border-radius: 50%;
-    animation: loading-spinner 1.5s infinite linear;
+    animation: loading-spinner 2s infinite linear;
 }
 
 @keyframes loading-spinner {
     0% {
         transform: rotate(0);
+    }
+
+    50% {
+        border-top-color: $purple;
+        border-bottom-color: $blue-bright;
     }
 
     100% {

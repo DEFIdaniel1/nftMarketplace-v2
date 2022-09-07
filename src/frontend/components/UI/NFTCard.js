@@ -11,7 +11,6 @@ const NFTCard = ({ name, image, seller, buyer, totalPrice, buyClick }) => {
                 <img src={image} alt={name} className="nft-image" />
             </div>
             <h3 className="nft-content__title">{name}</h3>
-
             <div className="nft-lower-box">
                 <div className="nft-price-box">
                     <div className="nft-price-box__price">Price</div>
@@ -22,7 +21,7 @@ const NFTCard = ({ name, image, seller, buyer, totalPrice, buyClick }) => {
                         </div>
                     </div>
                 </div>
-                <BuyButton buyClick={buyClick} />
+                {buyClick ? <BuyButton buyClick={buyClick} /> : <p className="sold">Sold</p>}
             </div>
         </div>
     )

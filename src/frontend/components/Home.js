@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { ethers } from 'ethers'
 import './Home.scss'
 
 import LoadingSpinner from './LoadingSpinner'
@@ -54,47 +53,55 @@ const Home = ({ marketplace, nft, itemCount }) => {
 
     return (
         <div>
+            <h1>GAL-XY</h1>
+            <h3>NFTs inspired by the beauty of the cosmos...</h3>
             {loadingMarketplace && (
                 <div>
                     <h1>Loading marketplace items...</h1>
                     <LoadingSpinner />
                 </div>
             )}
-            {!loadingMarketplace && items.length === 0 && <div>No NFTs listed...</div>}
-            {!loadingMarketplace && items.length > 0 && (
-                <div className="nft-box">
-                    {items.map((item, idx) => (
-                        <div key={idx}>
-                            <NFTCard
-                                name={item.name}
-                                image={item.image}
-                                totalPrice={item.totalPrice}
-                                seller={item.seller}
-                                buyClick={() => buyMarketItem(item)}
-                            />
-                        </div>
-                    ))}
+            {!loadingMarketplace && items.length === 0 && (
+                <div>
+                    <p>
+                        Please Connect your wallet to <strong>Goerli Testnet</strong>
+                    </p>
+                    <p>No NFTs are currently listed on this network...</p>
                 </div>
             )}
-            {!loadingMarketplace && soldItems.length > 0 && (
-                <div>
-                    <h1>Recently Sold NFTs...</h1>
+            {!loadingMarketplace && items.length > 0 && (
+                <div className="container">
+                    <h1>For Sale</h1>
                     <div className="nft-box">
-                        {soldItems.map((item, idx) => (
+                        {items.map((item, idx) => (
                             <div key={idx}>
-                                <h2>{item.name}</h2>
-                                <div className="imgDiv">
-                                    <img src={item.image} alt={`NFT ${item.name}`} />
-                                </div>
-                                <p>{item.description}</p>
-                                <h3>Sale Price: {ethers.utils.formatEther(item.totalPrice)} ETH</h3>
-                                <p>
-                                    Seller: {item.seller.slice(0, 4)}...
-                                    {item.seller.slice(item.seller.length - 4)}
-                                </p>
+                                <NFTCard
+                                    name={item.name}
+                                    image={item.image}
+                                    totalPrice={item.totalPrice}
+                                    seller={item.seller}
+                                    buyClick={() => buyMarketItem(item)}
+                                />
                             </div>
                         ))}
                     </div>
+                    {soldItems.length > 0 && (
+                        <div>
+                            <h1>Recently Sold NFTs...</h1>
+                            <div className="nft-box">
+                                {soldItems.map((item, idx) => (
+                                    <div key={idx}>
+                                        <NFTCard
+                                            name={item.name}
+                                            image={item.image}
+                                            totalPrice={item.totalPrice}
+                                            seller={item.seller}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
         </div>

@@ -2,35 +2,35 @@
 
 .nft-card {
     color: $gray-light;
-    box-shadow: 0 2px 15px -10px $blue-bright;
+    box-shadow: 0 2px 20px -5px $blue-bright;
     margin: 1rem 1rem 1rem 0;
     border-radius: 1rem;
-    background-color: $gray1;
+    background-color: rgba(0, 0, 0, 0.479);
     flex: 0 0 25%;
 
     transition: all 0.7s;
 
     &:hover {
-        transform: scale(1.05);
+        transform: scale(1.02);
         box-shadow: 0 2px 20px 0px $blue-bright;
         background-color: lighten($gray1, 2%);
 
-        animation: pulsate 3s infinite;
+        animation: pulsate 5s infinite;
     }
     @keyframes pulsate {
         0% {
-            box-shadow: 0 2px 20px 0px $blue-bright;
+            box-shadow: 0 2px 20px 0px $blue;
         }
         33% {
             box-shadow: 0 2px 20px 5px $blue-bright;
-            box-shadow: 0 2px 20px 0px rgb(238, 137, 238);
+            box-shadow: 0 2px 20px 0px rgb(182, 101, 182);
         }
         66% {
             box-shadow: 0 2px 20px 5px $blue-bright;
-            box-shadow: 0 2px 20px 0px rgb(99, 222, 86);
+            box-shadow: 0 2px 20px 0px rgb(140, 50, 65);
         }
         100% {
-            box-shadow: 0 2px 20px 0px $blue-bright;
+            box-shadow: 0 2px 20px 0px $blue;
         }
     }
 }
@@ -65,6 +65,12 @@
 .nft-lower-box {
     display: flex;
     align-items: flex-end;
+
+    .sold {
+        color: rgba(161, 255, 165, 0.762);
+        padding-right: 1rem;
+        align-self: flex-end;
+    }
 }
 .nft-price-box {
     display: flex;

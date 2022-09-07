@@ -7,6 +7,8 @@ $blue-bright: rgb(137, 210, 255);
 $blue-bright2: rgb(118, 183, 223);
 $blue-bright3: rgb(95, 148, 181);
 
+$purple: rgb(160, 38, 216);
+
 $gray-dark: rgb(60, 60, 60);
 $gray-dark5: darken($gray-dark, 5%);
 $gray-dark10: darken($gray-dark, 10%);
@@ -24,5 +26,5 @@ $secondaryBtn: $gray-light10;
 $tertiaryBtn: rgb(137, 210, 255);
 
 $sidebarColor: $gray-dark;
-$navbarColor: $gray-dark10;
+$navbarColor: darken($gray-dark10, 5%);
 $containerColor: $gray-dark5;

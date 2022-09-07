@@ -1,25 +1,38 @@
 import { Link } from 'react-router-dom'
+import Icon from './UI/Icon'
+import './Navbar.scss'
 
 function Navbar({ account, connectWallet }) {
     return (
-        <>
-            <nav>
-                <Link to="/">Home</Link>
-                <Link to="my-listings">My Listings</Link>
-                <Link to="my-purchases">Purchases</Link>
-                <Link to="mint">Mint NFTs</Link>
+        <div className="navbar">
+            <nav className="nav">
+                <div className="nav__item">
+                    <Link to="/">Home</Link>
+                </div>
+                <div className="nav__item">
+                    <Link to="my-listings">My Listings</Link>
+                </div>
+                <div className="nav__item">
+                    <Link to="my-purchases">Purchases</Link>
+                </div>
+                <div className="nav__item">
+                    <Link to="mint">Mint NFTs</Link>
+                </div>
             </nav>
+
             {account ? (
-                <div>
-                    <p>
+                <div className="connect connect__active">
+                    <p>Disconnect</p>
+                    <p className="acct">
                         {account.slice(0, 5)}...{account.slice(38, 42)}
                     </p>
-                    <button onClick={connectWallet}>Logout</button>
                 </div>
             ) : (
-                <button onClick={connectWallet}>Connect</button>
+                <div className="connect" onClick={connectWallet}>
+                    <p className="disconnect">Connect</p>
+                </div>
             )}
-        </>
+        </div>
     )
 }
 export default Navbar
