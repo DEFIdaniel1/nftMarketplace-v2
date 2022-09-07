@@ -1,0 +1,28 @@
+$gray1: rgb(42, 42, 42);
+$gray-light: rgb(239, 239, 239);
+$gray-light2: rgb(210, 210, 210);
+$gray-search: rgb(93, 93, 93);
+
+$blue-bright: rgb(137, 210, 255);
+$blue-bright2: rgb(118, 183, 223);
+$blue-bright3: rgb(95, 148, 181);
+
+$gray-dark: rgb(60, 60, 60);
+$gray-dark5: darken($gray-dark, 5%);
+$gray-dark10: darken($gray-dark, 10%);
+
+$gray-light5: lighten($gray-dark, 5%);
+$gray-light10: lighten($gray-dark, 10%);
+
+$blue-dark: rgb(53, 53, 53);
+
+$blue: rgb(121, 79, 79);
+$blue2: rgb(107, 107, 107);
+
+$primaryBtn: $gray-dark;
+$secondaryBtn: $gray-light10;
+$tertiaryBtn: rgb(137, 210, 255);
+
+$sidebarColor: $gray-dark;
+$navbarColor: $gray-dark10;
+$containerColor: $gray-dark5;
