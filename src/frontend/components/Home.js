@@ -1,48 +1,50 @@
-import { useEffect } from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
+import './Home.scss'
 
 import LoadingSpinner from './LoadingSpinner'
 
-const Home = ({ marketplace, nft }) => {
-    const [loadingMarketplace, setLoadingMarketplace] = useState(true)
+const Home = ({ marketplace, nft, itemCount }) => {
     const [items, setItems] = useState([])
+    const [loadingMarketplace, setLoadingMarketplace] = useState(true)
 
-    const buyMarketItem = async (item) => {
-        const buyTx = await marketplace.purchaseNFT(item.itemId, { value: item.totalPrice })
-        await buyTx.wait()
-        // loadMarketplaceItems() // reload after purchase will remove the purchased item
+    const loadMarketplaceItems = async () => {
+        for (let i = 1; i <= itemCount; i++) {
+            const item = await marketplace.getItemsMap(i)
+            if (!item.sold) {
+                const uri = await nft.tokenURI(item.tokenId)
+                const totalPrice = await marketplace.getTotalPrice(item.itemId)
+                // use uri to get IPFS metadata
+                const response = await fetch(uri)
+                const metadata = await response.json()
+                const newItem = {
+                    totalPrice,
+                    itemId: item.itemId.toString(),
+                    seller: item.seller.toString(),
+                    name: metadata.name.toString(),
+                    description: metadata.description.toString(),
+                    image: metadata.image.toString(),
+                }
+                setItems((arr) => [...arr, newItem])
+            }
+        }
+        setLoadingMarketplace(false)
     }
 
     useEffect(() => {
-        setLoadingMarketplace(true)
-        // const itemsArray = []
-        const loadMarketplaceItems = async () => {
-            const itemCount = await marketplace.getItemCount()
-            for (let i = 1; i <= itemCount; i++) {
-                const item = await marketplace.getItemsMap(i)
-                if (!item.sold) {
-                    const uri = await nft.tokenURI(item.uri) //built in interface contract
-                    const totalPrice = await marketplace.getTotalPrice(item.itemId)
-                    // use uri to get IPFS metadata
-                    const response = await fetch(uri)
-                    const metadata = await response.json()
-                    const newItem = {
-                        totalPrice,
-                        itemId: item.itemId,
-                        seller: item.seller,
-                        name: metadata.name,
-                        description: metadata.description,
-                        image: metadata.image,
-                    }
-                    setItems((arr) => [...arr, newItem])
-                }
-            }
-            // setItems(itemsArray)
-        }
         loadMarketplaceItems()
-        setLoadingMarketplace(false)
-    }, [buyMarketItem, marketplace, nft])
+    }, [itemCount, setItems])
+
+    const buyMarketItem = async (item) => {
+        const buyTx = await marketplace.purchaseNFT(item.itemId, {
+            value: item.totalPrice.toString(),
+        })
+        await buyTx.wait()
+        const tokenId = item.idx
+        setItems(items.filter((arrItem) => arrItem.idx !== tokenId))
+        loadMarketplaceItems()
+        console.log(items)
+    }
 
     return (
         <div>
@@ -58,10 +60,12 @@ const Home = ({ marketplace, nft }) => {
                     {items.map((item, idx) => (
                         <div key={idx}>
                             <h2>{item.name}</h2>
-                            <img src={item.image} alt={`NFT ${item.name}`} />
+                            <div className="imgDiv">
+                                <img src={item.image} alt={`NFT ${item.name}`} />
+                            </div>
                             <p>{item.description}</p>
                             <h3>Price: {ethers.utils.formatEther(item.totalPrice)} ETH</h3>
-                            <button onClick={buyMarketItem(item)}>Buy NFT</button>
+                            <button onClick={() => buyMarketItem(item)}>Buy NFT</button>
                         </div>
                     ))}
                 </div>

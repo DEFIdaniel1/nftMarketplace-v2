@@ -3,15 +3,15 @@ import { ethers } from 'ethers'
 import { useNavigate } from 'react-router-dom'
 
 const NFT_URI_1 =
-    'https://bafkreieauppee6ogkwr5kzgzqtm5jm3wfxltwmkojvmerzguui4uv5ebum.ipfs.nftstorage.link/'
+    'https://bafybeic5soplkxiipl5wrs4wtpucoo6ikxew5t33apjljxfxezpaecbqie.ipfs.nftstorage.link/nft1.json'
 const NFT_URI_2 =
-    'https://bafkreigqooj7rbw4p5nocaxtfqlutkck55kpsinmohl7ebjrulwkphwj2i.ipfs.nftstorage.link/'
+    'https://bafybeic5soplkxiipl5wrs4wtpucoo6ikxew5t33apjljxfxezpaecbqie.ipfs.nftstorage.link/nft2.json'
 const NFT_URI_3 =
-    'https://bafkreignao3uxqljfnw3czrw3gkjv42yv6vzp3jq7fbr7bq7g2ottglxuy.ipfs.nftstorage.link/'
+    'https://bafybeic5soplkxiipl5wrs4wtpucoo6ikxew5t33apjljxfxezpaecbqie.ipfs.nftstorage.link/nft3.json'
 const NFT_URI_4 =
-    'https://bafkreicpinncqvb5w2ukozbo3huprzkjhfprwxpl4vfjvzd2mbmulqronq.ipfs.nftstorage.link/'
+    'https://bafybeic5soplkxiipl5wrs4wtpucoo6ikxew5t33apjljxfxezpaecbqie.ipfs.nftstorage.link/nft4.json'
 const NFT_URI_5 =
-    'https://bafkreicji7ewjw6vdmvodurlfaqvb4cb74xmeg6c6wbnx3yzsgarqyg4fe.ipfs.nftstorage.link/'
+    'https://bafybeic5soplkxiipl5wrs4wtpucoo6ikxew5t33apjljxfxezpaecbqie.ipfs.nftstorage.link/nft5.json'
 
 const Mint = ({ nft, marketplace, account }) => {
     const [userNumber, setUserNumber] = useState('')
@@ -20,17 +20,14 @@ const Mint = ({ nft, marketplace, account }) => {
 
     const priceChangeHandler = (event) => {
         setPrice(event.target.value)
-        console.log(price)
     }
     const userNumberHandler = (event) => {
         setUserNumber(event.target.value)
-        console.log(userNumber)
     }
 
     const getRandomURI = () => {
-        console.log('starting random number generation')
+        console.log('Starting random number generation')
         const randomNumber = Math.floor(Math.random() * 1000)
-        console.log('randomNumber:' + randomNumber)
         const doubleRandom = ((userNumber * randomNumber) % 5) + 1
         let outputURI
         switch (doubleRandom) {
@@ -52,7 +49,6 @@ const Mint = ({ nft, marketplace, account }) => {
             default:
                 console.log(`Try again. Random number was: ${doubleRandom} outputURI: ${outputURI}`)
         }
-        console.log(`doubleRandom: ${doubleRandom}`)
         return outputURI
     }
 
@@ -61,26 +57,22 @@ const Mint = ({ nft, marketplace, account }) => {
             alert('Input a random number and price.')
         }
         const uri = getRandomURI()
-        console.log(`URI: ${uri}`)
         const listingPrice = ethers.utils.parseEther(price.toString())
-
         const mintTx = await nft.mint(uri)
         await mintTx.wait()
-        console.log('_____getting balance_______')
-        const balanceOf = await nft.balanceOf(account)
-        console.log(account)
-        console.log(balanceOf)
         const tokenId = await nft.balanceOf(account)
-        console.log('tokenID ' + tokenId)
-        console.log('Approving marketplace...')
+        console.log('Newly minted tokenID: ' + tokenId)
+
         const approveMarketplaceTx = await nft.approve(marketplace.address, tokenId)
+        console.log('Approving marketplace...')
         await approveMarketplaceTx.wait()
 
-        console.log('Listing NFT on marketplace...')
         const listNFTTx = await marketplace.listNFT(nft.address, tokenId, listingPrice)
+        console.log('Listing NFT on marketplace...')
         await listNFTTx.wait()
         console.log('Minting and listing complete!')
         navigate('/')
+        window.location.reload()
     }
 
     return (

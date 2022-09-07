@@ -19,6 +19,7 @@ function App() {
     const [account, setAccount] = useState(null)
     const [nft, setNFT] = useState({})
     const [marketplace, setMarketplace] = useState({})
+    const [itemCount, setItemCount] = useState('')
     // connect to metmask
     const web3Handler = async () => {
         // returns array of accounts.
@@ -43,6 +44,8 @@ function App() {
         const nft = new ethers.Contract(NFTAddress.address, NFTAbi.abi, signer)
         setNFT(nft)
         console.log('contracts loaded')
+        const checkItemCount = await marketplace.getItemCount()
+        setItemCount(checkItemCount)
     }
 
     return (
@@ -52,7 +55,12 @@ function App() {
                 {loading && <LoadingSpinner />}
                 {!loading && (
                     <Routes>
-                        <Route path="/" element={<Home marketplace={marketplace} nft={nft} />} />
+                        <Route
+                            path="/"
+                            element={
+                                <Home marketplace={marketplace} nft={nft} itemCount={itemCount} />
+                            }
+                        />
                         <Route
                             path="mint"
                             element={<Mint marketplace={marketplace} nft={nft} account={account} />}
