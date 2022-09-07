@@ -1,24 +1,23 @@
+// REQUIRES NODE BACKEND
+
 import { useState } from 'react'
 import { ethers } from 'ethers'
-import { create } from 'ipfs-http-client'
-const client = create('https://ipfs.infura.io:5001/api/v0')
+const {
+    storeImages,
+    storeTokenURIMetadata,
+} = require('../alternative ipfs connections/usePinataUpload')
 
 const Mint = ({ nft, marketplace }) => {
     const [imageUrl, setImageUrl] = useState('')
     const [price, setPrice] = useState('')
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [fileUrl, updateFileUrl] = useState(``)
-    async function handleFileUpload(e) {
-        const file = e.target.files[0]
-        try {
-            const added = await client.add(file)
-            const url = `https://ipfs.infura.io/ipfs/${added.path}`
-            updateFileUrl(url)
-            console.log(fileUrl)
-        } catch (error) {
-            console.log('Error uploading file: ', error)
-        }
+
+    const metadataTemplate = {
+        name: '',
+        description: '',
+        image: '',
+        attributes: [{ rarity: '' }],
     }
 
     const handlePriceChange = (event) => {
@@ -34,41 +33,21 @@ const Mint = ({ nft, marketplace }) => {
         console.log(description)
     }
 
-    const uploadToIPFS = async (event) => {
+    const getImageURI = async (event) => {
         event.preventDefault()
-        const file2 = event.target.files[0]
-
-        console.log('uploading...')
-        console.log(file2)
-        if (file2 !== 'undefined') {
-            try {
-                const added = await client.add(file2)
-                const url = `https://ipfs.infura.io/ipfs/${added.path}`
-                setImageUrl(url)
-            } catch (error) {
-                console.log('Error uploading file: ', error)
-            }
-        } else {
-            console.log('IPFS RAWR RAWR ERROR... file undefined')
+        const image = event.target.files[0]
+        if (!image) {
+            alert('Upload an image file first.')
         }
+        const imgURI = await storeImages(image)
+        console.log(`Image URI received: ${imgURI}`)
+        return imgURI
     }
 
-    // will add all metadata to IPFS, then interact with blockchain to mint/list NFT
-    const createNFT = async (e) => {
-        e.preventDefault()
-        if (imageUrl === '' || price === '' || name === '' || description === '') {
-            alert('Please fill out the form.')
-        }
-        //
-        try {
-            const ipfsUploadResult = await client.add(
-                JSON.stringify({ imageUrl, name, description })
-            )
-            mintThenList(ipfsUploadResult)
-        } catch (e) {
-            console.log('IPFS upload error for JSON object', e)
-        }
-    }
+    // const mintNFT = async()=> {
+
+    // }
+
     const mintThenList = async (ipfsObject) => {
         const uri = `https://ipfs.infura.io/ipfs/${ipfsObject.path}`
         const listingPrice = ethers.utils.parseEther(price.toString())
@@ -90,7 +69,7 @@ const Mint = ({ nft, marketplace }) => {
             <form action="">
                 <label>Upload Image</label>
                 {/* <input type="file" id="nftImage" name="file" onChange={uploadToIPFS} /> */}
-                <input type="file" onChange={handleFileUpload} />
+                <input type="file" onChange={getImageURI} />
                 <label>Name</label>
                 <input type="text" placeholder="name" onChange={handleNameChange} />
                 <label>Description</label>

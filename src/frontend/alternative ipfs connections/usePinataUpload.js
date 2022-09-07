@@ -1,3 +1,5 @@
+// REQUIRES NODE BACKEND
+
 const pinataSDK = require('@pinata/sdk')
 const fs = require('fs')
 

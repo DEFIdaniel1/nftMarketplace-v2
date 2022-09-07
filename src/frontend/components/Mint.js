@@ -55,6 +55,7 @@ const Mint = ({ nft, marketplace, account }) => {
     const mintThenList = async () => {
         if (userNumber === '' || price === '') {
             alert('Input a random number and price.')
+            return
         }
         const uri = getRandomURI()
         const listingPrice = ethers.utils.parseEther(price.toString())

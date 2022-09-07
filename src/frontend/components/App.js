@@ -1,18 +1,19 @@
 import { useState } from 'react'
 import { ethers } from 'ethers'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import './App.scss'
 
+import './App.scss'
 import Navbar from './Navbar'
 import Mint from './Mint'
-// import Buy from './Buy'
 import Home from './Home'
 import LoadingSpinner from './LoadingSpinner'
+import MyListings from './MyListings'
 
 import NFTAbi from '../contractsData/NFT.json'
 import NFTAddress from '../contractsData/NFT-address.json'
 import MarketplaceAddress from '../contractsData/Marketplace-address.json'
 import MarketplaceAbi from '../contractsData/Marketplace.json'
+import MyPurchases from './MyPurchases'
 
 function App() {
     const [loading, setLoading] = useState(true)
@@ -22,7 +23,7 @@ function App() {
     const [itemCount, setItemCount] = useState('')
     // connect to metmask
     const web3Handler = async () => {
-        // returns array of accounts.
+        // returns array of user's accounts
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
         // 1st account listed is the one connected to the app
         setAccount(accounts[0])
@@ -65,8 +66,34 @@ function App() {
                             path="mint"
                             element={<Mint marketplace={marketplace} nft={nft} account={account} />}
                         />
-                        {/* <Route path="buy" element={<Buy />} /> */}
-                        <Route path="/*" element={<Home marketplace={marketplace} nft={nft} />} />
+                        <Route
+                            path="my-listings"
+                            element={
+                                <MyListings
+                                    marketplace={marketplace}
+                                    nft={nft}
+                                    account={account}
+                                    itemCount={itemCount}
+                                />
+                            }
+                        />
+                        <Route
+                            path="my-purchases"
+                            element={
+                                <MyPurchases
+                                    marketplace={marketplace}
+                                    nft={nft}
+                                    account={account}
+                                    itemCount={itemCount}
+                                />
+                            }
+                        />
+                        <Route
+                            path="/*"
+                            element={
+                                <Home marketplace={marketplace} nft={nft} itemCount={itemCount} />
+                            }
+                        />
                     </Routes>
                 )}
             </BrowserRouter>

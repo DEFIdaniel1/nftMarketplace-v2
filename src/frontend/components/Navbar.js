@@ -5,8 +5,9 @@ function Navbar({ account, connectWallet }) {
         <>
             <nav>
                 <Link to="/">Home</Link>
-                <Link to="buy">Buy</Link>
-                <Link to="mint">Mint</Link>
+                <Link to="my-listings">My Listings</Link>
+                <Link to="my-purchases">Purchases</Link>
+                <Link to="mint">Mint NFTs</Link>
             </nav>
             {account ? (
                 <div>

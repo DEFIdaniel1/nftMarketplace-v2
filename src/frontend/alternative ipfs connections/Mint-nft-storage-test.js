@@ -1,3 +1,5 @@
+// REQUIRES NODE BACKEND
+
 import { useState } from 'react'
 import { ethers } from 'ethers'
 import { NFTStorage } from 'nft.storage'
