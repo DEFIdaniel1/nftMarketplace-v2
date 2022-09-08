@@ -21,9 +21,10 @@
         align-items: stretch;
         justify-content: space-around;
         flex-grow: 1;
+
         & > * {
             text-align: center;
-            width: 100%;
+            min-width: 15%;
             padding-top: 1rem;
             position: relative;
             z-index: 1;
@@ -42,12 +43,15 @@
                 z-index: -1;
             }
         }
-        & > *:hover {
+
+        & > *:hover,
+        a.active {
             cursor: pointer;
 
-            ::before {
+            ::before,
+            .active {
                 transform: scaleX(1);
-                // height: 100%; if wanting to add the cubic-bezier vertical effect later
+                // height: 100%; //if wanting to add the cubic-bezier vertical effect later
             }
         }
     }

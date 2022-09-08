@@ -1,22 +1,22 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import './Navbar.scss'
 
 function Navbar({ account, connectWallet }) {
     return (
         <div className="navbar">
             <nav className="nav">
-                <div className="nav__item">
-                    <Link to="/">Home</Link>
-                </div>
-                <div className="nav__item">
-                    <Link to="my-listings">My Listings</Link>
-                </div>
-                <div className="nav__item">
-                    <Link to="my-purchases">Purchases</Link>
-                </div>
-                <div className="nav__item">
-                    <Link to="mint">Mint NFTs</Link>
-                </div>
+                <NavLink to="/">
+                    <span className="nav__item">Home</span>
+                </NavLink>
+                <NavLink to="my-listings">
+                    <span className="nav__item">My Listings</span>
+                </NavLink>
+                <NavLink to="my-purchases">
+                    <span className="nav__item">Purchases</span>
+                </NavLink>
+                <NavLink to="mint">
+                    <span className="nav__item">Mint NFTs</span>
+                </NavLink>
             </nav>
 
             {account ? (
