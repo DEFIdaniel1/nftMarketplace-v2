@@ -26,19 +26,19 @@
             width: 100%;
             padding-top: 1rem;
             position: relative;
-            z-index: 10;
+            z-index: 1;
 
             ::before {
                 content: '';
                 position: absolute;
                 bottom: 0;
                 left: 0;
-                height: 100%;
-                width: 0%;
+                height: 3px;
+                width: 100%;
                 z-index: 1;
                 background-color: $blue-bright2;
                 transform: scaleX(0);
-                transition: transform 0.2s, cubic-bezier(1, 0, 0, 1) 0.2s;
+                transition: transform 0.2s, height cubic-bezier(1, 0, 0, 1) 0.3s 0.2s;
                 z-index: -1;
             }
         }
@@ -47,8 +47,7 @@
 
             ::before {
                 transform: scaleX(1);
-                height: 100%;
-                width: 100%;
+                // height: 100%; if wanting to add the cubic-bezier vertical effect later
             }
         }
     }
@@ -60,11 +59,26 @@
     transition: all 0.2s;
     margin-left: 0.2rem;
     padding: 0 0.2rem;
+    position: relative;
+    overflow: hidden;
     &:hover {
         cursor: pointer;
-        box-shadow: 0 0 0.5rem 0 white;
         color: white;
     }
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(231, 231, 231, 0.553), transparent);
+        transition: 0.4s;
+    }
+    &:hover::before {
+        left: 100%;
+    }
+
     p {
         line-height: 0;
         text-align: center;

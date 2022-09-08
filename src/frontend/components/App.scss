@@ -10,11 +10,11 @@ body {
     // background: linear-gradient(to left, rgba(255, 255, 255, 0.606), rgba(0, 0, 0, 0.834)),
     //     url('../images//cosmos2.jpg');
     color: white;
-    height: 100vh;
+    min-height: 100vh;
 
     h1 {
         text-align: center;
-        margin: 4rem 0 2rem 0;
+        padding: 4rem 0 0 0;
     }
     h3 {
         text-align: center;
@@ -23,4 +23,11 @@ body {
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.center-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
 }

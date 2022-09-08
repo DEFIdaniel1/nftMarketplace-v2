@@ -53,8 +53,13 @@ const Home = ({ marketplace, nft, itemCount }) => {
 
     return (
         <div>
-            <h1>GAL-XY</h1>
-            <h3>NFTs inspired by the beauty of the cosmos...</h3>
+            <div className="header">
+                <div className="header__left">
+                    <h1>GAL-XY</h1>
+                    <h3>NFTs inspired by the beauty of the cosmos...</h3>
+                </div>
+                <div className="header__right">Some image</div>
+            </div>
             {loadingMarketplace && (
                 <div>
                     <h1>Loading marketplace items...</h1>
@@ -62,7 +67,7 @@ const Home = ({ marketplace, nft, itemCount }) => {
                 </div>
             )}
             {!loadingMarketplace && items.length === 0 && (
-                <div>
+                <div className="change-network">
                     <p>
                         Please Connect your wallet to <strong>Goerli Testnet</strong>
                     </p>

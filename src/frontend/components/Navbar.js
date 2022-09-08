@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import Icon from './UI/Icon'
 import './Navbar.scss'
 
 function Navbar({ account, connectWallet }) {

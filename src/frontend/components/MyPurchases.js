@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import LoadingSpinner from './LoadingSpinner'
 import { ethers } from 'ethers'
+import './Home.scss'
+import NFTCard from './UI/NFTCard'
 
 const MyPurchases = ({ marketplace, nft, account }) => {
     const [loading, setLoading] = useState(true)
@@ -35,8 +37,8 @@ const MyPurchases = ({ marketplace, nft, account }) => {
         setLoading(false)
     }
     useEffect(() => {
-        loadPurchasedItems()
-    }, [marketplace, nft])
+        setTimeout(loadPurchasedItems(), 1000)
+    }, [nft, marketplace])
 
     if (loading) {
         return (
@@ -51,20 +53,18 @@ const MyPurchases = ({ marketplace, nft, account }) => {
             {purchases.length > 0 && (
                 <div>
                     <h1>My Purchases</h1>
-                    {purchases.map((item, idx) => (
-                        <div key={idx}>
-                            <h3>{item.name}</h3>
-                            <div className="imgDiv">
-                                <img src={item.image} alt={`NFT ${item.name}`} />
+                    <div className="nft-box">
+                        {purchases.map((item, idx) => (
+                            <div key={idx}>
+                                <NFTCard
+                                    name={item.name}
+                                    image={item.image}
+                                    totalPrice={item.totalPrice}
+                                    seller={item.seller}
+                                />
                             </div>
-                            <p>{item.description}</p>
-                            <h3>Price: {ethers.utils.formatEther(item.totalPrice)} ETH</h3>
-                            <p>
-                                Seller: {item.seller.slice(0, 4)}...
-                                {item.seller.slice(item.seller.length - 4)}
-                            </p>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             )}
         </div>

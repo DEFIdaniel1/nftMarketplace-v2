@@ -4,7 +4,7 @@ import { ethers } from 'ethers'
 import ethIcon from '../../images/eth.svg'
 import BuyButton from './BuyButton'
 
-const NFTCard = ({ name, image, seller, buyer, totalPrice, buyClick }) => {
+const NFTCard = ({ name, image, seller, buyer, totalPrice, buyClick, sold }) => {
     return (
         <div className="nft-card">
             <div className="nft-image-div">
@@ -21,7 +21,8 @@ const NFTCard = ({ name, image, seller, buyer, totalPrice, buyClick }) => {
                         </div>
                     </div>
                 </div>
-                {buyClick ? <BuyButton buyClick={buyClick} /> : <p className="sold">Sold</p>}
+                {buyClick && !sold && <BuyButton buyClick={buyClick} />}
+                {!buyClick && sold && <p className="sold">Sold</p>}
             </div>
         </div>
     )
