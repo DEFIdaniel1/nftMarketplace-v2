@@ -3,6 +3,7 @@ import './Home.scss'
 
 import LoadingSpinner from './LoadingSpinner'
 import NFTCard from './UI/NFTCard'
+import headerImg from '../images/galCircle.png'
 
 const Home = ({ marketplace, nft, itemCount }) => {
     const [items, setItems] = useState([])
@@ -55,10 +56,12 @@ const Home = ({ marketplace, nft, itemCount }) => {
         <div>
             <div className="header">
                 <div className="header__left">
-                    <h1>GAL-XY</h1>
-                    <h3>NFTs inspired by the beauty of the cosmos...</h3>
+                    <div className="header__left-title">GAL-XY</div>
+                    <div className="header__left-subtitle">
+                        NFTs inspired by the beauty of the cosmos...
+                    </div>
                 </div>
-                <div className="header__right">Some image</div>
+                <div className="header__right">{<img src={headerImg} alt="" />}</div>
             </div>
             {loadingMarketplace && (
                 <div>

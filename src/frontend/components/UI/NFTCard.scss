@@ -14,7 +14,7 @@
     &:hover {
         transform: scale(1.02);
         background-color: lighten($gray1, 2%);
-        animation: pulsate 5s infinite;
+        animation: pulsate 3s infinite;
     }
     // CARD glossy hover effect
     // &::before {
