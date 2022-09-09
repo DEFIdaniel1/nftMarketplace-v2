@@ -1,55 +1,20 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './Home.scss'
 
-import LoadingSpinner from './UI/LoadingSpinner'
-import NFTCard from './UI/NFTCard'
 import headerImg from '../images/galCircle.png'
+import Button from './UI/Button.js'
 
-const Home = ({ marketplace, nft, itemCount }) => {
-    const [items, setItems] = useState([])
-    const [soldItems, setSoldItems] = useState([])
-    const [loadingMarketplace, setLoadingMarketplace] = useState(true)
+import nftImg1 from '../nfts/nft1.png'
+import nftImg2 from '../nfts/nft2.jpeg'
+import nftImg3 from '../nfts/nft3.jpeg'
+import nftImg5 from '../nfts/nft5.jpeg'
 
-    const loadMarketplaceItems = async () => {
-        for (let i = 1; i <= itemCount; i++) {
-            const item = await marketplace.getItemsMap(i)
-            const uri = await nft.tokenURI(item.tokenId)
-            const totalPrice = await marketplace.getTotalPrice(item.itemId)
-            // use uri to get IPFS metadata
-            const response = await fetch(uri)
-            const metadata = await response.json()
-            const newItem = {
-                totalPrice,
-                itemId: item.itemId.toString(),
-                seller: item.seller.toString(),
-                name: metadata.name.toString(),
-                description: metadata.description.toString(),
-                image: metadata.image.toString(),
-                sold: item.sold,
-            }
-            if (!newItem.sold) {
-                setItems((arr) => [...arr, newItem])
-            }
-            if (newItem.sold) {
-                setSoldItems((arr) => [...arr, newItem])
-            }
-        }
-        setLoadingMarketplace(false)
-    }
-
-    useEffect(() => {
-        loadMarketplaceItems()
-    }, [itemCount, setItems, setSoldItems]) // eslint-disable-line react-hooks/exhaustive-deps
-
-    const buyMarketItem = async (item) => {
-        const buyTx = await marketplace.purchaseNFT(item.itemId, {
-            value: item.totalPrice.toString(),
-        })
-        await buyTx.wait()
-        const tokenId = item.idx
-        setItems(items.filter((arrItem) => arrItem.idx !== tokenId))
-        loadMarketplaceItems()
-        console.log(items)
+const Home = () => {
+    const navigate = useNavigate()
+    // const contractAddress = '../frontend/contractsData/NFT-address.json'
+    const mintBtnHandler = () => {
+        navigate('/mint')
     }
 
     return (
@@ -57,71 +22,70 @@ const Home = ({ marketplace, nft, itemCount }) => {
             <div className="header">
                 <div className="header__left">
                     <div className="header__left-title">GAL-XY</div>
-                    <div className="header__left-subtitle">
-                        NFTs inspired by the beauty of the cosmos...
-                    </div>
+                    <div className="header__left-subtitle">NFTs inspired by the cosmos...</div>
                 </div>
-                <div className="header__right">{<img src={headerImg} alt="" />}</div>
+                <div className="header__right">{<img src={headerImg} alt="rotating galaxy" />}</div>
             </div>
-            {/* <div className="c1">
-                <div className="c1-right">Right</div>
-                <div className="c1-center">Center</div>
-                <div className="c1-left">Left</div>
-            </div> */}
-            {/* <div className="c2">
-                <div className="c2right">Right</div>
-                <div className="c2left">Left</div>
-            </div> */}
-
-            {loadingMarketplace && (
-                <div>
-                    <h1>Loading marketplace items...</h1>
-                    <LoadingSpinner />
-                </div>
-            )}
-            {!loadingMarketplace && items.length === 0 && (
-                <div className="change-network">
-                    <p>
-                        Please Connect your wallet to <strong>Goerli Testnet</strong>
-                    </p>
-                    <p>No NFTs are currently listed on this network...</p>
-                </div>
-            )}
-            {!loadingMarketplace && items.length > 0 && (
-                <div className="container">
-                    <h1>NFTs For Sale</h1>
-                    <div className="nft-box">
-                        {items.map((item, idx) => (
-                            <div key={idx}>
-                                <NFTCard
-                                    name={item.name}
-                                    image={item.image}
-                                    totalPrice={item.totalPrice}
-                                    seller={item.seller}
-                                    buyClick={() => buyMarketItem(item)}
-                                />
-                            </div>
-                        ))}
+            <div className="cMint">
+                <div className="cMintleft-row">
+                    <span className="cInfo-title">Limited Mints Available</span>
+                    <div className="cInfo-subheading">
+                        With a capped supply of only 100 NFTs per GAL-X Model, you don't want to
+                        miss out.
                     </div>
-                    {soldItems.length > 0 && (
-                        <div>
-                            <h1>Recently Sold NFTs...</h1>
-                            <div className="nft-box">
-                                {soldItems.map((item, idx) => (
-                                    <div key={idx}>
-                                        <NFTCard
-                                            name={item.name}
-                                            image={item.image}
-                                            totalPrice={item.totalPrice}
-                                            seller={item.seller}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+                    <Button onClick={mintBtnHandler}>Mint Yours</Button>
                 </div>
-            )}
+                <div className="cMintright">
+                    <div className="cMintright-row">
+                        <div className="cMintright-col1">
+                            <img src={nftImg1} alt="" />
+                        </div>
+                        <div className="cMintright-col1">
+                            <img src={nftImg2} alt="" />
+                        </div>
+                    </div>
+                    <div className="cMintright-row">
+                        <div className="cMintright-r2c1">
+                            <img src={nftImg3} alt="" />
+                        </div>
+                        <div className="cMintright-r2c1">
+                            <img src={nftImg5} alt="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="cInfo">
+                <div className="cInfo-right">
+                    <span className="cInfo-title">Built with Smart Contracts</span>
+                    <div className="cInfo-subheading">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A tempora commodi
+                        aut obcaecati officiis quo sed sequi odit. Dolores qui sunt harum eligendi
+                        sapiente voluptatibus quibusdam numquam explicabo voluptatum incidunt.
+                    </div>
+                </div>
+                <div className="cInfo-center">
+                    <span className="cInfo-title">Secured by the Blockchain</span>
+                    <div className="cInfo-subheading">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A tempora commodi
+                        aut obcaecati officiis quo sed sequi odit.
+                    </div>
+                </div>
+                <div className="cInfo-left">
+                    <span className="cInfo-title">Mint Your Own NFTs</span>
+                    <div className="cInfo-subheading">
+                        A tempora commodi aut obcaecati officiis quo sed sequi odit. Dolores qui
+                        sunt harum eligendi sapiente voluptatibus quibusdam numquam explicabo
+                        voluptatum incidunt.
+                    </div>
+                </div>
+            </div>
+            <div className="cContract">
+                <h1>Live on Goerli Testnet</h1>
+                <h3>Contract Address</h3>
+                <h2>0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512</h2>
+            </div>
+
+            <div className="cCopy">Copyright DEFIdaniel1 2022.</div>
         </div>
     )
 }
