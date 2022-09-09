@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react'
-import LoadingSpinner from './LoadingSpinner'
+import LoadingSpinner from './UI/LoadingSpinner'
 import { ethers } from 'ethers'
 import './Home.scss'
 import NFTCard from './UI/NFTCard'
+import LoadingScreen from './UI/LoadingScreen'
 
-const MyPurchases = ({ marketplace, nft, account }) => {
-    const [loading, setLoading] = useState(true)
+const MyPurchases = ({ marketplace, nft, account, loading }) => {
+    const [loadingPurchases, setLoadingPurchases] = useState(true)
     const [purchases, setPurchases] = useState([])
 
     const loadPurchasedItems = async () => {
-        setLoading(true)
+        setLoadingPurchases(true)
         // filter EVENT
         const filter = marketplace.filters.Purchased(null, null, null, null, null, account)
         const results = await marketplace.queryFilter(filter)
@@ -34,13 +35,20 @@ const MyPurchases = ({ marketplace, nft, account }) => {
             })
         )
         setPurchases(purchases)
-        setLoading(false)
+        setLoadingPurchases(false)
     }
     useEffect(() => {
-        setTimeout(loadPurchasedItems(), 1000)
-    }, [nft, marketplace])
+        if (loading) {
+            return
+        }
+        loadPurchasedItems()
+    }, [nft])
 
     if (loading) {
+        return <LoadingScreen />
+    }
+
+    if (loadingPurchases) {
         return (
             <div>
                 <h2>Loading purchases...</h2>

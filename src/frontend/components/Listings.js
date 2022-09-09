@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import './Home.scss'
+import './Listings.scss'
 
 import LoadingSpinner from './UI/LoadingSpinner'
 import NFTCard from './UI/NFTCard'
 import headerImg from '../images/galCircle.png'
+import LoadingScreen from '../components/UI/LoadingScreen'
 
-const Home = ({ marketplace, nft, itemCount }) => {
+const Listings = ({ marketplace, nft, itemCount, loading }) => {
     const [items, setItems] = useState([])
     const [soldItems, setSoldItems] = useState([])
     const [loadingMarketplace, setLoadingMarketplace] = useState(true)
@@ -52,27 +53,12 @@ const Home = ({ marketplace, nft, itemCount }) => {
         console.log(items)
     }
 
+    if (loading) {
+        return <LoadingScreen />
+    }
+
     return (
         <div>
-            <div className="header">
-                <div className="header__left">
-                    <div className="header__left-title">GAL-XY</div>
-                    <div className="header__left-subtitle">
-                        NFTs inspired by the beauty of the cosmos...
-                    </div>
-                </div>
-                <div className="header__right">{<img src={headerImg} alt="" />}</div>
-            </div>
-            {/* <div className="c1">
-                <div className="c1-right">Right</div>
-                <div className="c1-center">Center</div>
-                <div className="c1-left">Left</div>
-            </div> */}
-            {/* <div className="c2">
-                <div className="c2right">Right</div>
-                <div className="c2left">Left</div>
-            </div> */}
-
             {loadingMarketplace && (
                 <div>
                     <h1>Loading marketplace items...</h1>
@@ -126,4 +112,4 @@ const Home = ({ marketplace, nft, itemCount }) => {
     )
 }
 
-export default Home
+export default Listings

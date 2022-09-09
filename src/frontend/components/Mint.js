@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { ethers } from 'ethers'
 import { useNavigate } from 'react-router-dom'
 
+import LoadingScreen from './UI/LoadingScreen'
+
 const NFT_URI_1 =
     'https://bafybeic5soplkxiipl5wrs4wtpucoo6ikxew5t33apjljxfxezpaecbqie.ipfs.nftstorage.link/nft1.json'
 const NFT_URI_2 =
@@ -13,7 +15,7 @@ const NFT_URI_4 =
 const NFT_URI_5 =
     'https://bafybeic5soplkxiipl5wrs4wtpucoo6ikxew5t33apjljxfxezpaecbqie.ipfs.nftstorage.link/nft5.json'
 
-const Mint = ({ nft, marketplace, account }) => {
+const Mint = ({ nft, marketplace, account, loading }) => {
     const [userNumber, setUserNumber] = useState('')
     const [price, setPrice] = useState('')
     const navigate = useNavigate()
@@ -74,6 +76,10 @@ const Mint = ({ nft, marketplace, account }) => {
         console.log('Minting and listing complete!')
         navigate('/')
         window.location.reload()
+    }
+
+    if (loading) {
+        return <LoadingScreen />
     }
 
     return (

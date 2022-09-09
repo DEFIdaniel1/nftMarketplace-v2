@@ -6,7 +6,6 @@ import './App.scss'
 import Navbar from './Navbar'
 import Mint from './Mint'
 import Home from './Home'
-import LoadingSpinner from './LoadingSpinner'
 import MyListings from './MyListings'
 import Listings from './Listings'
 
@@ -54,66 +53,59 @@ function App() {
         <div>
             <BrowserRouter>
                 <Navbar connectWallet={web3Handler} account={account} />
-                {loading && (
-                    <div className="center-spinner">
-                        <LoadingSpinner
-                            title="Click 'Connect'"
-                            subtitle="load your web3 wallet..."
-                        />
-                    </div>
-                )}
-                {!loading && (
-                    <Routes>
-                        <Route
-                            path="/"
-                            element={
-                                <Home marketplace={marketplace} nft={nft} itemCount={itemCount} />
-                            }
-                        />
-                        <Route
-                            path="/listings"
-                            element={
-                                <Listings
-                                    marketplace={marketplace}
-                                    nft={nft}
-                                    itemCount={itemCount}
-                                />
-                            }
-                        />
-                        <Route
-                            path="mint"
-                            element={<Mint marketplace={marketplace} nft={nft} account={account} />}
-                        />
-                        <Route
-                            path="my-listings"
-                            element={
-                                <MyListings
-                                    marketplace={marketplace}
-                                    nft={nft}
-                                    account={account}
-                                    itemCount={itemCount}
-                                />
-                            }
-                        />
-                        <Route
-                            path="my-purchases"
-                            element={
-                                <MyPurchases
-                                    marketplace={marketplace}
-                                    nft={nft}
-                                    account={account}
-                                    itemCount={itemCount}
-                                />
-                            }
-                        />
-                        <Route
-                            path="/*"
-                            element={
-                                <Home marketplace={marketplace} nft={nft} itemCount={itemCount} />
-                            }
-                        />
-                    </Routes>
-                )}
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route
+                        path="/listings"
+                        element={
+                            <Listings
+                                marketplace={marketplace}
+                                nft={nft}
+                                itemCount={itemCount}
+                                loading={loading}
+                            />
+                        }
+                    />
+                    <Route
+                        path="mint"
+                        element={
+                            <Mint
+                                marketplace={marketplace}
+                                nft={nft}
+                                account={account}
+                                loading={loading}
+                            />
+                        }
+                    />
+                    <Route
+                        path="my-listings"
+                        element={
+                            <MyListings
+                                marketplace={marketplace}
+                                nft={nft}
+                                account={account}
+                                itemCount={itemCount}
+                                loading={loading}
+                            />
+                        }
+                    />
+                    <Route
+                        path="my-purchases"
+                        element={
+                            <MyPurchases
+                                marketplace={marketplace}
+                                nft={nft}
+                                account={account}
+                                itemCount={itemCount}
+                                loading={loading}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/*"
+                        element={<Home marketplace={marketplace} nft={nft} itemCount={itemCount} />}
+                    />
+                </Routes>
             </BrowserRouter>
         </div>
     )

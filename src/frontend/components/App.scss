@@ -30,14 +30,3 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
-
-.center-spinner {
-    display: flex;
-    justify-content: center;
-    // align-items:
-    height: 94vh;
-    background: linear-gradient(to right, rgba(60, 60, 60, 0.125), rgba(33, 23, 42, 0.516)),
-        url('../images/logo.png');
-    background-position: top left;
-    background-repeat: no-repeat;
-}

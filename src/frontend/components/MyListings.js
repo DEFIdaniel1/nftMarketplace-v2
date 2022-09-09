@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react'
-import LoadingSpinner from './LoadingSpinner'
-import { ethers } from 'ethers'
+import LoadingSpinner from './UI/LoadingSpinner'
 import './Home.scss'
 
+import LoadingScreen from './UI/LoadingScreen'
 import NFTCard from './UI/NFTCard'
 
-const MyListings = ({ marketplace, nft, account, itemCount }) => {
-    const [loading, setLoading] = useState(true)
+const MyListings = ({ marketplace, nft, account, itemCount, loading }) => {
+    const [loadListings, setLoadListings] = useState(true)
     const [listedItems, setListedItems] = useState([])
     const [soldItems, setSoldItems] = useState([])
 
     const loadListedItems = async () => {
-        setLoading(true)
+        setLoadListings(true)
         for (let i = 1; i <= itemCount; i++) {
             const item = await marketplace.getItemsMap(i)
             console.log(item.tokenId.toString())
@@ -39,13 +39,16 @@ const MyListings = ({ marketplace, nft, account, itemCount }) => {
                 }
             }
         }
-        setLoading(false)
+        setLoadListings(false)
     }
     useEffect(() => {
         loadListedItems()
     }, [itemCount]) // eslint-disable-line react-hooks/exhaustive-deps
 
-    if (loading)
+    if (loading) {
+        return <LoadingScreen />
+    }
+    if (loadListings)
         return (
             <div>
                 <LoadingSpinner title="Loading your listings..." />
@@ -53,13 +56,13 @@ const MyListings = ({ marketplace, nft, account, itemCount }) => {
         )
     return (
         <div>
-            {!loading && listedItems.length === 0 && (
+            {!loadListings && listedItems.length === 0 && (
                 <div>
                     <h1>My Active Listings</h1>
                     <div>You don't have any listings. Go mint and list some NFTs!</div>
                 </div>
             )}
-            {!loading && listedItems.length > 0 && (
+            {!loadListings && listedItems.length > 0 && (
                 <div>
                     <h1>My Active Listings</h1>
                     <div className="nft-box">
