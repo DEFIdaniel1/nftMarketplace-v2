@@ -8,6 +8,9 @@ function Navbar({ account, connectWallet }) {
                 <NavLink to="/">
                     <span className="nav__item">Home</span>
                 </NavLink>
+                <NavLink to="listings">
+                    <span className="nav__item">Listings</span>
+                </NavLink>
                 <NavLink to="my-listings">
                     <span className="nav__item">My Listings</span>
                 </NavLink>

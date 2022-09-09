@@ -8,6 +8,7 @@ import Mint from './Mint'
 import Home from './Home'
 import LoadingSpinner from './LoadingSpinner'
 import MyListings from './MyListings'
+import Listings from './Listings'
 
 import NFTAbi from '../contractsData/NFT.json'
 import NFTAddress from '../contractsData/NFT-address.json'
@@ -67,6 +68,16 @@ function App() {
                             path="/"
                             element={
                                 <Home marketplace={marketplace} nft={nft} itemCount={itemCount} />
+                            }
+                        />
+                        <Route
+                            path="/listings"
+                            element={
+                                <Listings
+                                    marketplace={marketplace}
+                                    nft={nft}
+                                    itemCount={itemCount}
+                                />
                             }
                         />
                         <Route

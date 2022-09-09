@@ -2,21 +2,27 @@
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-        'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-family: sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: $gray-dark;
-    // background: linear-gradient(to left, rgba(255, 255, 255, 0.606), rgba(0, 0, 0, 0.834)),
-    //     url('../images//cosmos2.jpg');
     color: white;
     min-height: 100vh;
 
     h1 {
+        font-family: 'Exo 2', sans-serif;
         text-align: center;
+        font-size: 4rem;
+        font-weight: 100;
         padding: 4rem 0 0 0;
     }
+    h2 {
+        font-weight: 400;
+        color: rgb(209, 209, 209);
+    }
     h3 {
+        font-family: 'Exo 2', sans-serif;
+        font-size: 2rem;
         text-align: center;
     }
 }
@@ -28,6 +34,10 @@ code {
 .center-spinner {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 50vh;
+    // align-items:
+    height: 94vh;
+    background: linear-gradient(to right, rgba(60, 60, 60, 0.125), rgba(33, 23, 42, 0.516)),
+        url('../images/logo.png');
+    background-position: top left;
+    background-repeat: no-repeat;
 }

@@ -63,6 +63,16 @@ const Home = ({ marketplace, nft, itemCount }) => {
                 </div>
                 <div className="header__right">{<img src={headerImg} alt="" />}</div>
             </div>
+            {/* <div className="c1">
+                <div className="c1-right">Right</div>
+                <div className="c1-center">Center</div>
+                <div className="c1-left">Left</div>
+            </div> */}
+            {/* <div className="c2">
+                <div className="c2right">Right</div>
+                <div className="c2left">Left</div>
+            </div> */}
+
             {loadingMarketplace && (
                 <div>
                     <h1>Loading marketplace items...</h1>
@@ -79,7 +89,7 @@ const Home = ({ marketplace, nft, itemCount }) => {
             )}
             {!loadingMarketplace && items.length > 0 && (
                 <div className="container">
-                    <h1>For Sale</h1>
+                    <h1>NFTs For Sale</h1>
                     <div className="nft-box">
                         {items.map((item, idx) => (
                             <div key={idx}>

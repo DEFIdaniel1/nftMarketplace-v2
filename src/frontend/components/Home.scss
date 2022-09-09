@@ -8,7 +8,7 @@
     min-height: 30vh;
     display: flex;
     overflow: hidden;
-    background: linear-gradient(to right, rgb(63, 63, 63), black);
+    background: linear-gradient(to bottom right, rgb(80, 80, 80), black);
 
     &__left {
         width: 50%;
@@ -16,8 +16,10 @@
         flex-direction: column;
         justify-content: center;
         &-title {
+            font-family: 'Exo 2', sans-serif;
+
             font-size: 6rem;
-            font-weight: 200;
+            font-weight: 300;
         }
         &-subtitle {
             font-size: 2rem;
@@ -44,6 +46,33 @@
                 transform: rotate(360deg);
             }
         }
+    }
+}
+
+.c1 {
+    display: flex;
+    justify-content: space-around;
+    height: 40vh;
+    transition: all 1s;
+
+    & > * {
+        // flex-grow: 1;
+        transition: all 1s;
+    }
+    & > *:hover {
+        scale: 60%;
+        transition: all 1s;
+        background-color: white;
+    }
+
+    &-right {
+        background-color: blue;
+    }
+    &-center {
+        background-color: purple;
+    }
+    &-left {
+        background-color: yellow;
     }
 }
 
