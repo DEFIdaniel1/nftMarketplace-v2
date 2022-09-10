@@ -1,0 +1,52 @@
+@import '../variables';
+
+.mintPage {
+    text-align: center;
+    height: 94vh;
+    background: linear-gradient(to right, rgba(37, 31, 40, 0.597), rgba(0, 0, 0, 0.885)),
+        url('../images/cosmos3.png');
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    h1 {
+        margin-top: 0;
+    }
+
+    .mintForm {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-grow: 1;
+
+        & > * {
+            padding: 0 2rem;
+        }
+
+        label {
+            @include heading(2rem);
+        }
+        input {
+            background-color: rgba(76, 147, 182, 0.442);
+            border-radius: 20px;
+            border: none;
+            color: white;
+            padding: 0.4rem 1rem;
+            font-size: 1.8rem;
+            height: 3rem;
+            text-align: center;
+            :focus {
+                outline: none !important;
+            }
+        }
+    }
+    .mintButton {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+
+        & > * {
+            width: 40%;
+        }
+    }
+}

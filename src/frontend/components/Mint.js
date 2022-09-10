@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { ethers } from 'ethers'
 import { useNavigate } from 'react-router-dom'
 
+import './Mint.scss'
 import LoadingScreen from './UI/LoadingScreen'
+import Button from '../components/UI/Button'
 
 const NFT_URI_1 =
     'https://bafybeic5soplkxiipl5wrs4wtpucoo6ikxew5t33apjljxfxezpaecbqie.ipfs.nftstorage.link/nft1.json'
@@ -83,25 +85,34 @@ const Mint = ({ nft, marketplace, account, loading }) => {
     }
 
     return (
-        <div>
+        <div className="mintPage">
             <h1>Mint Your NFT</h1>
-            <form action="">
-                <label>Random Number</label>
-                <input
-                    type="number"
-                    placeholder="A number to output a random NFT"
-                    onChange={userNumberHandler}
-                />
-                <label>Sell Price</label>
-                <input
-                    type="number"
-                    placeholder="Price to sell your NFT in ETH"
-                    onChange={priceChangeHandler}
-                />
-                <button type="button" onClick={mintThenList}>
-                    Mint and List NFT!
-                </button>
+            <h3>Control your destiny... </h3>
+            <form className="mintForm" action="">
+                <div>
+                    <label>Random Number</label>
+                    <p>Pick any number to help randomize your NFT mint.</p>
+                    <input
+                        className="randomNumber"
+                        type="number"
+                        placeholder="Your number"
+                        onChange={userNumberHandler}
+                    />
+                </div>
+                <div>
+                    <label>Sell Price</label>
+                    <p>Instantly list your NFT for the price you want.</p>
+                    <input
+                        className="sellPrice"
+                        type="number"
+                        placeholder="Price in ETH"
+                        onChange={priceChangeHandler}
+                    />
+                </div>
             </form>
+            <div className="mintButton">
+                <Button onClick={mintThenList}>Mint and List!</Button>
+            </div>
         </div>
     )
 }
