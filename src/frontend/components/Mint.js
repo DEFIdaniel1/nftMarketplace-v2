@@ -76,7 +76,7 @@ const Mint = ({ nft, marketplace, account, loading }) => {
         console.log('Listing NFT on marketplace...')
         await listNFTTx.wait()
         console.log('Minting and listing complete!')
-        navigate('/')
+        navigate('/listings')
         window.location.reload()
     }
 

@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import './Navbar.scss'
 
-function Navbar({ account, connectWallet }) {
+function Navbar({ account, connectWallet, disconnectWallet }) {
     return (
         <div className="navbar">
             <nav className="nav">
@@ -23,7 +23,7 @@ function Navbar({ account, connectWallet }) {
             </nav>
 
             {account ? (
-                <div className="connect connect__active">
+                <div onClick={disconnectWallet} className="connect connect__active">
                     <p>Disconnect</p>
                     <p className="acct">
                         {account.slice(0, 5)}...{account.slice(38, 42)}

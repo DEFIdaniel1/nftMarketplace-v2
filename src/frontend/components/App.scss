@@ -9,6 +9,10 @@ body {
     color: white;
     min-height: 100vh;
 
+    @include responsiveMin1800 {
+        font-size: 160%;
+    }
+
     h1 {
         font-family: 'Exo 2', sans-serif;
         text-align: center;
@@ -29,4 +33,20 @@ body {
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.nft-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.container {
+    background-color: $gray-dark10;
+    padding: 0rem 3%;
+
+    h1 {
+        text-align: center;
+        margin-top: 0;
+    }
 }

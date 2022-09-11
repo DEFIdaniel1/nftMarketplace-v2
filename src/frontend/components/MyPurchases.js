@@ -59,7 +59,7 @@ const MyPurchases = ({ marketplace, nft, account, loading }) => {
     return (
         <div>
             {purchases.length > 0 && (
-                <div>
+                <div className="container">
                     <h1>My Purchases</h1>
                     <div className="nft-box">
                         {purchases.map((item, idx) => (

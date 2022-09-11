@@ -63,7 +63,7 @@ const MyListings = ({ marketplace, nft, account, itemCount, loading }) => {
                 </div>
             )}
             {!loadListings && listedItems.length > 0 && (
-                <div>
+                <div className="container">
                     <h1>My Active Listings</h1>
                     <div className="nft-box">
                         {listedItems.map((item, idx) => (
@@ -81,7 +81,7 @@ const MyListings = ({ marketplace, nft, account, itemCount, loading }) => {
                 </div>
             )}
             {!loading && soldItems.length > 0 && (
-                <div>
+                <div className="container">
                     <h1>Sold Listings</h1>
                     <div className="nft-box">
                         {soldItems.map((item, idx) => (

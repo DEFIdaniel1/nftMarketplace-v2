@@ -14,6 +14,7 @@ import NFTAddress from '../contractsData/NFT-address.json'
 import MarketplaceAddress from '../contractsData/Marketplace-address.json'
 import MarketplaceAbi from '../contractsData/Marketplace.json'
 import MyPurchases from './MyPurchases'
+import { useEffect } from 'react'
 
 function App() {
     const [loading, setLoading] = useState(true)
@@ -22,7 +23,7 @@ function App() {
     const [marketplace, setMarketplace] = useState({})
     const [itemCount, setItemCount] = useState('')
     // connect to metmask
-    const web3Handler = async () => {
+    const web3Login = async () => {
         // returns array of user's accounts
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
         // 1st account listed is the one connected to the app
@@ -32,6 +33,12 @@ function App() {
         const signer = provider.getSigner()
         setLoading(false)
         loadContracts(signer)
+        localStorage.setItem('wallet', accounts[0])
+    }
+    const web3Logout = () => {
+        setAccount(null)
+        setLoading(true)
+        localStorage.clear()
     }
 
     const loadContracts = async (signer) => {
@@ -49,10 +56,17 @@ function App() {
         setItemCount(checkItemCount)
     }
 
+    useEffect(() => {
+        if (localStorage.getItem('wallet') != null) {
+            console.log(localStorage.getItem('wallet'))
+            web3Login()
+        }
+    }, [])
+
     return (
         <div>
             <BrowserRouter>
-                <Navbar connectWallet={web3Handler} account={account} />
+                <Navbar connectWallet={web3Login} disconnectWallet={web3Logout} account={account} />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route

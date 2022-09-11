@@ -90,7 +90,7 @@ const Listings = ({ marketplace, nft, itemCount, loading }) => {
                         ))}
                     </div>
                     {soldItems.length > 0 && (
-                        <div>
+                        <div className="container">
                             <h1>Recently Sold NFTs...</h1>
                             <div className="nft-box">
                                 {soldItems.map((item, idx) => (
