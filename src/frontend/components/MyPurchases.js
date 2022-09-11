@@ -51,8 +51,7 @@ const MyPurchases = ({ marketplace, nft, account, loading }) => {
     if (loadingPurchases) {
         return (
             <div>
-                <h2>Loading purchases...</h2>
-                <LoadingSpinner />
+                <LoadingSpinner title="Loading purchases..." />
             </div>
         )
     }

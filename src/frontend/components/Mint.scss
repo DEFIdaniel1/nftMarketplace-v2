@@ -18,6 +18,11 @@
         justify-content: space-around;
         align-items: center;
         flex-grow: 1;
+        padding: 4rem 0;
+
+        @include responsiveMin1800 {
+            padding: 7rem;
+        }
 
         & > * {
             padding: 0 2rem;

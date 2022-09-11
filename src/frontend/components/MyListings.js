@@ -57,7 +57,7 @@ const MyListings = ({ marketplace, nft, account, itemCount, loading }) => {
     return (
         <div>
             {!loadListings && listedItems.length === 0 && (
-                <div>
+                <div className="change-network">
                     <h1>My Active Listings</h1>
                     <div>You don't have any listings. Go mint and list some NFTs!</div>
                 </div>

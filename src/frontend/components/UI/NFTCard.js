@@ -4,9 +4,9 @@ import { ethers } from 'ethers'
 import ethIcon from '../../images/eth.svg'
 import BuyButton from './BuyButton'
 
-const NFTCard = ({ name, image, seller, buyer, totalPrice, buyClick, sold }) => {
+const NFTCard = ({ name, image, idx, totalPrice, buyClick, sold }) => {
     return (
-        <div className="nft-card">
+        <div key={idx} className="nft-card">
             <div className="nft-image-div">
                 <img src={image} alt={name} className="nft-image" />
             </div>

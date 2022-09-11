@@ -27,7 +27,7 @@ const Home = () => {
                 <div className="header__right">{<img src={headerImg} alt="rotating galaxy" />}</div>
             </div>
             <div className="cMint">
-                <div className="cMintleft-row">
+                <div className="cMintleft-col">
                     <span className="cInfo-title">Limited Mints Available</span>
                     <div className="cInfo-subheading">
                         With a capped supply of only 100 NFTs per GAL-X Model, you don't want to
@@ -36,7 +36,7 @@ const Home = () => {
                     <Button onClick={mintBtnHandler}>Mint Yours</Button>
                 </div>
                 <div className="cMintright">
-                    <div className="cMintright-row">
+                    <div className="cMintright-col">
                         <div className="cMintright-col1">
                             <img src={nftImg1} alt="" />
                         </div>
@@ -44,7 +44,7 @@ const Home = () => {
                             <img src={nftImg2} alt="" />
                         </div>
                     </div>
-                    <div className="cMintright-row">
+                    <div className="cMintright-col">
                         <div className="cMintright-r2c1">
                             <img src={nftImg3} alt="" />
                         </div>
@@ -84,8 +84,6 @@ const Home = () => {
                 <h3>Contract Address</h3>
                 <h2>0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512</h2>
             </div>
-
-            <div className="cCopy">Copyright DEFIdaniel1 2022.</div>
         </div>
     )
 }

@@ -91,7 +91,7 @@ const Mint = ({ nft, marketplace, account, loading }) => {
             <form className="mintForm" action="">
                 <div>
                     <label>Random Number</label>
-                    <p>Pick any number to help randomize your NFT mint.</p>
+                    <p>Pick a number to randomize your NFT mint.</p>
                     <input
                         className="randomNumber"
                         type="number"

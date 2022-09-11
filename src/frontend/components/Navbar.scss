@@ -3,8 +3,8 @@
 .navbar {
     background-color: $navbarColor;
     color: white;
-    font-weight: 600;
-    font-size: 1.3rem;
+    font-weight: 400;
+    font-size: 1.2rem;
     height: 3rem;
     display: flex;
     justify-content: space-between;
@@ -12,7 +12,8 @@
     height: 100%;
 
     @include responsiveMin1800 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
+        font-weight: 400;
     }
 
     a {
@@ -101,6 +102,10 @@
         }
         .acct {
             font-size: 0.7rem;
+
+            @include responsiveMin1800 {
+                font-size: 0.85rem;
+            }
         }
     }
 }

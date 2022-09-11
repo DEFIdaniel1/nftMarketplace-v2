@@ -3,7 +3,6 @@ import './Listings.scss'
 
 import LoadingSpinner from './UI/LoadingSpinner'
 import NFTCard from './UI/NFTCard'
-import headerImg from '../images/galCircle.png'
 import LoadingScreen from '../components/UI/LoadingScreen'
 
 const Listings = ({ marketplace, nft, itemCount, loading }) => {
@@ -78,15 +77,14 @@ const Listings = ({ marketplace, nft, itemCount, loading }) => {
                     <h1>NFTs For Sale</h1>
                     <div className="nft-box">
                         {items.map((item, idx) => (
-                            <div key={idx}>
-                                <NFTCard
-                                    name={item.name}
-                                    image={item.image}
-                                    totalPrice={item.totalPrice}
-                                    seller={item.seller}
-                                    buyClick={() => buyMarketItem(item)}
-                                />
-                            </div>
+                            <NFTCard
+                                key={idx}
+                                name={item.name}
+                                image={item.image}
+                                totalPrice={item.totalPrice}
+                                seller={item.seller}
+                                buyClick={() => buyMarketItem(item)}
+                            />
                         ))}
                     </div>
                     {soldItems.length > 0 && (

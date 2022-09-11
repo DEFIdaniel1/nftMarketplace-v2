@@ -120,6 +120,7 @@ function App() {
                         element={<Home marketplace={marketplace} nft={nft} itemCount={itemCount} />}
                     />
                 </Routes>
+                <div className="cCopy">Copyright DEFIdaniel1 2022.</div>
             </BrowserRouter>
         </div>
     )
