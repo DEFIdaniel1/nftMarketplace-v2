@@ -62,14 +62,13 @@ const MyPurchases = ({ marketplace, nft, account, loading }) => {
                     <h1>My Purchases</h1>
                     <div className="nft-box">
                         {purchases.map((item, idx) => (
-                            <div key={idx}>
-                                <NFTCard
-                                    name={item.name}
-                                    image={item.image}
-                                    totalPrice={item.totalPrice}
-                                    seller={item.seller}
-                                />
-                            </div>
+                            <NFTCard
+                                key={idx}
+                                name={item.name}
+                                image={item.image}
+                                totalPrice={item.totalPrice}
+                                seller={item.seller}
+                            />
                         ))}
                     </div>
                 </div>

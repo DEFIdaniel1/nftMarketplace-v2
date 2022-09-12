@@ -67,15 +67,14 @@ const MyListings = ({ marketplace, nft, account, itemCount, loading }) => {
                     <h1>My Active Listings</h1>
                     <div className="nft-box">
                         {listedItems.map((item, idx) => (
-                            <div key={idx}>
-                                <NFTCard
-                                    name={item.name}
-                                    image={item.image}
-                                    totalPrice={item.totalPrice}
-                                    seller={item.seller}
-                                    sold={item.sold}
-                                />
-                            </div>
+                            <NFTCard
+                                key={idx}
+                                name={item.name}
+                                image={item.image}
+                                totalPrice={item.totalPrice}
+                                seller={item.seller}
+                                sold={item.sold}
+                            />
                         ))}
                     </div>
                 </div>
@@ -85,15 +84,14 @@ const MyListings = ({ marketplace, nft, account, itemCount, loading }) => {
                     <h1>Sold Listings</h1>
                     <div className="nft-box">
                         {soldItems.map((item, idx) => (
-                            <div key={idx}>
-                                <NFTCard
-                                    name={item.name}
-                                    image={item.image}
-                                    totalPrice={item.totalPrice}
-                                    seller={item.seller}
-                                    sold={item.sold}
-                                />
-                            </div>
+                            <NFTCard
+                                key={idx}
+                                name={item.name}
+                                image={item.image}
+                                totalPrice={item.totalPrice}
+                                seller={item.seller}
+                                sold={item.sold}
+                            />
                         ))}
                     </div>
                 </div>

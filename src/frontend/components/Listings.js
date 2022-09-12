@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import './Listings.scss'
 
 import LoadingSpinner from './UI/LoadingSpinner'
 import NFTCard from './UI/NFTCard'
@@ -92,14 +91,13 @@ const Listings = ({ marketplace, nft, itemCount, loading }) => {
                             <h1>Recently Sold NFTs...</h1>
                             <div className="nft-box">
                                 {soldItems.map((item, idx) => (
-                                    <div key={idx}>
-                                        <NFTCard
-                                            name={item.name}
-                                            image={item.image}
-                                            totalPrice={item.totalPrice}
-                                            seller={item.seller}
-                                        />
-                                    </div>
+                                    <NFTCard
+                                        key={idx}
+                                        name={item.name}
+                                        image={item.image}
+                                        totalPrice={item.totalPrice}
+                                        seller={item.seller}
+                                    />
                                 ))}
                             </div>
                         </div>
