@@ -1,6 +1,7 @@
 @import '../variables';
 
 .navbar {
+    box-sizing: border-box;
     background-color: $navbarColor;
     color: white;
     font-weight: 400;
@@ -21,76 +22,159 @@
         text-decoration: none;
         z-index: 20;
     }
+}
 
+////////////////////////// LARGE DISPLAY NAV ///////////////////////////
+.nav {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    flex-grow: 1;
+
+    & > * {
+        text-align: center;
+        min-width: 15%;
+        padding-top: 1rem;
+        position: relative;
+        z-index: 1;
+
+        ::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            z-index: 1;
+            background-color: $blue-bright2;
+            transform: scaleX(0);
+            transition: transform 0.2s, height cubic-bezier(1, 0, 0, 1) 0.3s 0.2s;
+            z-index: -1;
+        }
+    }
+    & > *:hover,
+    a.active {
+        cursor: pointer;
+
+        ::before,
+        .active {
+            transform: scaleX(1);
+            // height: 100%; //if wanting to add the cubic-bezier vertical effect later
+        }
+    }
+}
+////////////////////////// BURGER ///////////////////////////
+
+////////////// BURGER NAV VIEW ///////////////////
+@include responsiveMax900 {
+    .navbar {
+        background-color: rgba(0, 0, 0, 0.9);
+        transform: all 1s;
+        &__open {
+            position: fixed;
+            top: 0;
+            height: 80vh;
+            width: 100%;
+            z-index: 100;
+        }
+        &__closed {
+            height: 3rem;
+        }
+    }
     .nav {
-        display: flex;
-        align-items: stretch;
-        justify-content: space-around;
-        flex-grow: 1;
+        flex-direction: column;
+        width: 3rem;
+        transform: all 1s;
 
         & > * {
-            text-align: center;
-            min-width: 15%;
-            padding-top: 1rem;
-            position: relative;
-            z-index: 1;
-
             ::before {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                height: 3px;
-                width: 100%;
-                z-index: 1;
-                background-color: $blue-bright2;
-                transform: scaleX(0);
-                transition: transform 0.2s, height cubic-bezier(1, 0, 0, 1) 0.3s 0.2s;
-                z-index: -1;
+                bottom: -4px;
+                left: 35%;
+                width: 30%;
             }
         }
+    }
+    .nav__open {
+        width: 3rem;
+        padding-top: 3rem;
+        padding-left: 15%;
+    }
+    .nav__item {
+        width: 5rem;
+    }
+    .nav__closed {
+        visibility: collapse;
+    }
+}
+.navBurger {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: space-between;
+    justify-content: space-between;
+    padding: 0.7rem 0;
+    cursor: pointer;
+    transition: all 0.2s;
 
-        & > *:hover,
-        a.active {
-            cursor: pointer;
+    & > * {
+        height: 0.15rem;
+        width: 2.5rem;
+        transition: all 0.4s;
+        display: inline-block;
+        background-color: white;
+    }
 
-            ::before,
-            .active {
-                transform: scaleX(1);
-                // height: 100%; //if wanting to add the cubic-bezier vertical effect later
+    &__closed {
+        &:hover {
+            padding: 0.5rem 0;
+        }
+    }
+    &__open {
+        position: fixed;
+
+        > * {
+            &:nth-child(1) {
+                transform: rotate(135deg);
+                position: fixed;
+                top: 1.6rem;
+            }
+            &:nth-child(2) {
+                opacity: 0;
+            }
+            &:nth-child(3) {
+                transform: rotate(-135deg);
+                position: fixed;
+                top: 1.6rem;
             }
         }
     }
 }
+//hide burger menu when >900px
+@include responsiveMinCustom(900px) {
+    .navBurger {
+        & > * {
+            height: 0;
+            width: 0;
+        }
+    }
+}
 
+////////////////////////// CONNECT BUTTON ///////////////////////////
 .connect {
     background-color: $blue-bright;
     border: none;
     transition: all 0.2s;
-    margin-left: 0.2rem;
     padding: 0 0.4rem;
-    position: relative;
-    overflow: hidden;
     border-radius: 5px;
+    @include glossyHover(rgba(242, 242, 242, 0.925));
+    max-height: 3rem;
 
+    &:hover::before {
+        left: 100%;
+    }
     &:hover {
         cursor: pointer;
         color: white;
     }
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(240, 240, 240, 0.758), transparent);
-        transition: 0.4s;
-    }
-    &:hover::before {
-        left: 100%;
-    }
-
     p {
         line-height: 0;
         text-align: center;
@@ -99,6 +183,7 @@
     &__active {
         background-color: $blue-bright3;
         p {
+            font-size: 90%;
             padding: 0 0.3rem;
             line-height: 0.2;
         }

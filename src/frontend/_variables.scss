@@ -107,8 +107,8 @@ $navbarColor: darken($gray-dark10, 5%);
         @content;
     }
 }
-@mixin responsiveCustom($screenSize) {
-    @media (max-width: $screenSize) {
+@mixin responsiveMinCustom($screenSize) {
+    @media (min-width: $screenSize) {
         @content;
     }
 }
