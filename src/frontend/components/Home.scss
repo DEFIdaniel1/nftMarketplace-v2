@@ -1,40 +1,77 @@
 @import '../variables';
 
-.change-network {
-    text-align: center;
-}
 .header {
     padding: 0 9%;
-    min-height: 90vh;
+    height: 90vh;
     display: flex;
     overflow: hidden;
     background: linear-gradient(to bottom right, rgb(39, 39, 39), black);
 
     &__left {
-        width: 50%;
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        z-index: 2;
+
+        @include responsiveMax600 {
+            width: 120%;
+        }
         &-title {
             font-family: 'Exo 2', sans-serif;
             font-size: 6rem;
             font-weight: 300;
+            padding-bottom: 0.5rem;
+            @include responsiveMax900 {
+                font-size: 4rem;
+            }
+            @include responsiveMax600 {
+                font-size: 3rem;
+            }
+            @include responsiveMax400 {
+                font-size: 2.5rem;
+            }
         }
         &-subtitle {
             font-size: 2rem;
             font-weight: 100;
+            @include responsiveMax900 {
+                font-size: 1.5rem;
+            }
+            @include responsiveMax600 {
+                font-size: 1rem;
+            }
         }
     }
     &__right {
-        width: 50%;
+        width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
+        z-index: 1;
+
+        @include responsiveMax600 {
+            // width: 100%;
+            // height: 100%;
+        }
         img {
             height: 100%;
-            width: 100%;
+            width: 150%;
             animation: rotate 130s linear infinite;
+            @include responsiveMax900 {
+                width: 200%;
+                height: 100%;
+            }
+            @include responsiveMax600 {
+                width: 250%;
+                height: 90%;
+            }
+            @include responsiveMax400 {
+                width: 250%;
+                height: 70%;
+            }
         }
+
         @keyframes rotate {
             0% {
                 transform: rotate(0deg);
@@ -52,15 +89,21 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 2rem 10%;
+    padding: 4% 10%;
     background-color: rgb(29, 29, 29);
-    min-height: 80vh;
+    min-height: 40rem;
+    // max-height: 70rem;
+
+    @include responsiveMax900 {
+        align-items: flex-start;
+        flex-direction: column-reverse;
+    }
+    @include responsiveMax600 {
+        min-height: 30rem;
+    }
 
     &left-col {
         padding-right: 10%;
-        flex-grow: 1;
-        background-size: cover;
-        border-radius: 30px;
         margin: 0.5rem 0;
         display: flex;
         flex-direction: column;
@@ -68,13 +111,14 @@
     }
 
     &right-col {
+        //IMAGES GRID
         display: flex;
         justify-content: center;
         align-items: center;
         width: fit-content;
 
         & > * {
-            //ROWs
+            //IMAGE ROWs
             display: flex;
             justify-content: center;
             align-items: center;
@@ -84,6 +128,15 @@
             border-radius: 20px;
             margin: 0.5rem;
 
+            @include responsiveMax900 {
+                height: 13rem;
+            }
+            @include responsiveMax600 {
+                height: 10rem;
+            }
+            @include responsiveMax400 {
+                height: 7rem;
+            }
             @include responsiveMin1800 {
                 height: 19rem;
             }
@@ -103,7 +156,6 @@
 .cInfo {
     display: flex;
     justify-content: space-around;
-    padding: 0 2%;
     min-height: 50vh;
     background-color: rgb(42, 42, 42);
     transition: all 0.7s;
@@ -112,7 +164,6 @@
         transition: all 1s;
         width: 33%;
         padding: 4% 6%;
-        // padding-top: 6%;
         display: flex;
         flex-direction: column;
     }
@@ -125,10 +176,23 @@
     &-title {
         @include heading(2rem);
         text-align: left;
+
+        @include responsiveMax600 {
+            @include heading(1.5rem);
+            text-align: left;
+        }
     }
     &-subheading {
         padding: 1rem 0;
         font-weight: 200;
+    }
+
+    @include responsiveMax900 {
+        flex-direction: column;
+        & > * {
+            box-sizing: border-box;
+            width: 100%;
+        }
     }
 }
 
@@ -143,5 +207,10 @@
     min-height: 50vh;
     h1 {
         margin-top: 0;
+    }
+    h2 {
+        @include responsiveMax600 {
+            font-size: 90%;
+        }
     }
 }

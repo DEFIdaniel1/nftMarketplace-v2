@@ -15,6 +15,11 @@
     overflow: hidden;
     transition: all 0.3s;
 
+    @include responsiveMax600 {
+        @include heading(1rem);
+        font-weight: 600;
+    }
+
     &::before {
         content: '';
         position: absolute;

@@ -1,0 +1,52 @@
+@import './frontend/variables';
+html {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: $gray-dark;
+    color: white;
+    min-height: 100vh;
+
+    @include responsiveMax900 {
+        font-size: 80%;
+    }
+    @include responsiveMax600 {
+        font-size: 70%;
+    }
+    @include responsiveMin1800 {
+        font-size: 160%;
+    }
+
+    h1 {
+        font-family: 'Exo 2', sans-serif;
+        text-align: center;
+        font-size: 4rem;
+        font-weight: 100;
+        padding: 4rem 0 0 0;
+
+        @include responsiveMax600 {
+            font-size: 2rem;
+        }
+    }
+    h2 {
+        font-weight: 400;
+        color: rgb(209, 209, 209);
+    }
+    h3 {
+        font-family: 'Exo 2', sans-serif;
+        font-size: 2rem;
+        text-align: center;
+
+        @include responsiveMax600 {
+            font-size: 1.5rem;
+        }
+    }
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}

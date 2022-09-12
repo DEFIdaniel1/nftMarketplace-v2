@@ -81,12 +81,18 @@ $navbarColor: darken($gray-dark10, 5%);
 
 //////////////// MEDIA QUERIES ///////////////////
 /* 
-0-600px -> phone
+0-400 smallphone
+400-600px -> largerphone
 600-900 -> tablet portrait
 900-1200 tablet landscape
 1200-1800 normal 
 1800+ big desktop
 */
+@mixin responsiveMax400 {
+    @media (max-width: 25em) {
+        @content;
+    }
+}
 @mixin responsiveMax600 {
     @media (max-width: 37.5em) {
         @content;
