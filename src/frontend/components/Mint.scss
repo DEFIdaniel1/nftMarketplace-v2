@@ -20,6 +20,11 @@
         flex-grow: 1;
         padding: 4rem 0;
 
+        @include responsiveMax900 {
+            flex-direction: column;
+            padding: 1rem;
+        }
+
         @include responsiveMin1800 {
             padding: 7rem;
         }
@@ -30,6 +35,9 @@
 
         label {
             @include heading(2rem);
+            @include responsiveMax900 {
+                @include heading(1.6rem);
+            }
         }
         input {
             background-color: rgba(76, 147, 182, 0.442);
@@ -40,6 +48,12 @@
             font-size: 1.8rem;
             height: 2.2rem;
             text-align: center;
+
+            @include responsiveMax900 {
+                height: 1.5rem;
+                width: 60%;
+                font-size: 1rem;
+            }
         }
     }
     .mintButton {
