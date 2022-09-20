@@ -81,8 +81,9 @@ const Home = () => {
             </div>
             <div className="cContract">
                 <h1>Live on Goerli Testnet</h1>
-                <h3>Contract Address</h3>
-                <h2>0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512</h2>
+                <h3>Contract Addresses</h3>
+                <h2>0x81b2F370EDF65dC4370C03bD3424caef91eDdDd8</h2>
+                <h2>0xfb36A92A0AaBc9Ebfd25F59eFfbFaf6a9267e1DF</h2>
             </div>
         </div>
     )

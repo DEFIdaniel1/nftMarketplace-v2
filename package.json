@@ -1,5 +1,5 @@
 {
-    "name": "NFT Marketplace",
+    "name": "Gal-Xy Marketplace",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
@@ -13,6 +13,7 @@
         "axios": "^0.27.2",
         "chai": "^4.3.6",
         "ethers": "^5.5.4",
+        "firebase": "^9.10.0",
         "form-data": "^4.0.0",
         "fs": "^0.0.1-security",
         "hardhat": "^2.8.4",

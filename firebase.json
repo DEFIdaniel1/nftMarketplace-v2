@@ -1,0 +1,13 @@
+{
+    "hosting": {
+        "public": "build",
+        "site": "gal-xy",
+        "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+        "rewrites": [
+            {
+                "source": "**",
+                "destination": "/index.html"
+            }
+        ]
+    }
+}

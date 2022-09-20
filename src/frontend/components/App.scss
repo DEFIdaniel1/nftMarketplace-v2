@@ -9,8 +9,10 @@
 .container {
     background-color: $gray-dark10;
     padding: 0rem 3%;
+    min-height: 86vh;
 
-    h1 {
+    h1,
+    h2 {
         text-align: center;
         margin-top: 0;
     }

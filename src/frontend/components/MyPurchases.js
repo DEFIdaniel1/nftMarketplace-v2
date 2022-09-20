@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import LoadingSpinner from './UI/LoadingSpinner'
-import { ethers } from 'ethers'
 import './Home.scss'
 import NFTCard from './UI/NFTCard'
 import LoadingScreen from './UI/LoadingScreen'
@@ -57,7 +56,7 @@ const MyPurchases = ({ marketplace, nft, account, loading }) => {
     }
     return (
         <div>
-            {purchases.length > 0 && (
+            {purchases.length > 0 ? (
                 <div className="container">
                     <h1>My Purchases</h1>
                     <div className="nft-box">
@@ -71,6 +70,11 @@ const MyPurchases = ({ marketplace, nft, account, loading }) => {
                             />
                         ))}
                     </div>
+                </div>
+            ) : (
+                <div className="container">
+                    <h1>You don't have any purchases</h1>
+                    <h2>Yet...</h2>
                 </div>
             )}
         </div>

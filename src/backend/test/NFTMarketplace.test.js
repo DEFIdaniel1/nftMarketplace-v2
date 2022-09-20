@@ -20,8 +20,8 @@ describe('NFT Marketplace', function () {
 
     describe('Deployment', function () {
         it('Should initialize correct NFT name and symbol', async function () {
-            expect(await nftContract.name()).to.equal('Megaladon')
-            expect(await nftContract.symbol()).to.equal('MEGA')
+            expect(await nftContract.name()).to.equal('GAL-XY')
+            expect(await nftContract.symbol()).to.equal('GALXY')
         })
         it('Should track feeAccount and feePercent of the marketplace', async function () {
             expect(await marketplaceContract.s_feePercent()).to.equal(5)
@@ -44,7 +44,7 @@ describe('NFT Marketplace', function () {
     })
 
     describe('Mint NFT', function () {
-        it.only('Should track each minted NFT', async function () {
+        it('Should track each minted NFT', async function () {
             // account1 to mint NFT
             await nftContract.connect(account1).mint(testURI)
             expect(await nftContract.tokenCount()).to.equal(1)
