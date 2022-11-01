@@ -3,7 +3,7 @@ require('@nomicfoundation/hardhat-chai-matchers')
 require('ethers')
 require('dotenv').config()
 const PRIVATE_KEY = process.env.REACT_APP_PRIVATE_KEY
-const GOERLI_URL = process.env.REACT_APP_GOERLI_URL2
+const GOERLI_URL = process.env.REACT_APP_GOERLI_URL
 
 module.exports = {
     solidity: '0.8.4',

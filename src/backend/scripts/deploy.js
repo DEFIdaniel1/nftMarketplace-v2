@@ -1,3 +1,4 @@
+const fs = require('fs')
 const { ethers } = require('hardhat')
 
 async function main() {
@@ -5,7 +6,7 @@ async function main() {
     console.log('Deploying contracts with the account:', deployer.address)
     console.log('Account balance:', (await deployer.getBalance()).toString())
 
-    // deploy contracts here:
+    // Deploy contracts here:
     const nftFactory = await ethers.getContractFactory('NFT')
     const nftContract = await nftFactory.deploy()
 
@@ -15,26 +16,27 @@ async function main() {
     console.log(`\n NFT Contract address is: ${nftContract.address}\n`)
     console.log(`\n Marketplace address is: ${marketplaceContract.address}\n`)
 
-    // For each contract, pass the deployed contract and name to this function to save a copy of the contract ABI and address to the front end.
+    // Save contract ABI and deployed address to files
     saveFrontendFiles(nftContract, 'NFT')
     saveFrontendFiles(marketplaceContract, 'Marketplace')
 }
 
 function saveFrontendFiles(contract, name) {
-    const fs = require('fs')
     const contractsDir = __dirname + '/../../frontend/contractsData'
 
+    // Make folder if needed
     if (!fs.existsSync(contractsDir)) {
         fs.mkdirSync(contractsDir)
     }
 
+    // Write address to file
     fs.writeFileSync(
         contractsDir + `/${name}-address.json`,
         JSON.stringify({ address: contract.address }, undefined, 2)
     )
 
+    // Artifact contains ABI data to interact with the contract. Saves to file.
     const contractArtifact = artifacts.readArtifactSync(name)
-
     fs.writeFileSync(contractsDir + `/${name}.json`, JSON.stringify(contractArtifact, null, 2))
 }
 

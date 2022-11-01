@@ -26,6 +26,7 @@ node_modules
 coverage
 coverage.json
 typechain
+.firebaserc
 
 #Hardhat files
 cache

@@ -7,6 +7,7 @@ describe('NFT Marketplace', function () {
     let testURI = 'URI'
     let testURI2 = 'another URI'
 
+    // Connect to contracts and accounts
     beforeEach(async function () {
         const nftFactory = await ethers.getContractFactory('NFT')
         const marketplaceFactory = await ethers.getContractFactory('Marketplace')

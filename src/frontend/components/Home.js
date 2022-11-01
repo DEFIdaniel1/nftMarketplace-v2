@@ -12,7 +12,6 @@ import nftImg5 from '../nfts/nft5.jpeg'
 
 const Home = () => {
     const navigate = useNavigate()
-    // const contractAddress = '../frontend/contractsData/NFT-address.json'
     const mintBtnHandler = () => {
         navigate('/mint')
     }

@@ -19,7 +19,7 @@ function Navbar({ account, connectWallet, disconnectWallet }) {
                 <div></div>
             </div>
             <nav className={!openNav ? 'nav nav__closed' : 'nav nav__open'}>
-                <NavLink to="/">
+                <NavLink to="/" end>
                     <span className="nav__item" onClick={openNavHandler}>
                         Home
                     </span>

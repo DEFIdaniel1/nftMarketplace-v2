@@ -29,6 +29,7 @@ const Mint = ({ nft, marketplace, account, loading }) => {
         setUserNumber(event.target.value)
     }
 
+    // Gets one of 5 random NFT metadata files for minting
     const getRandomURI = () => {
         console.log('Starting random number generation')
         const randomNumber = Math.floor(Math.random() * 1000)
@@ -56,6 +57,11 @@ const Mint = ({ nft, marketplace, account, loading }) => {
         return outputURI
     }
 
+    /*
+        Function will mint the nft using the NFT contract
+        Inputs the user's selected number and price
+        Will mint with a random URI from 5 above, set price, and list on the marketplace
+    */
     const mintThenList = async () => {
         if (userNumber === '' || price === '') {
             alert('Input a random number and price.')
@@ -63,23 +69,26 @@ const Mint = ({ nft, marketplace, account, loading }) => {
         }
         const uri = getRandomURI()
         const listingPrice = ethers.utils.parseEther(price.toString())
+
+        // Mint NFT with random token URI
         const mintTx = await nft.mint(uri)
         await mintTx.wait()
         const tokenId = await nft.balanceOf(account)
         console.log('Newly minted tokenID: ' + tokenId)
 
+        // Need approval for selling the NFT on marketplace (they keep it until sale)
         const approveMarketplaceTx = await nft.approve(marketplace.address, tokenId)
-        console.log('Approving marketplace...')
         await approveMarketplaceTx.wait()
 
+        // Lists the NFT on the Marketplace contract
         const listNFTTx = await marketplace.listNFT(nft.address, tokenId, listingPrice)
-        console.log('Listing NFT on marketplace...')
         await listNFTTx.wait()
         console.log('Minting and listing complete!')
         navigate('/listings')
         window.location.reload()
     }
 
+    // Screen to connect metamask if not connected
     if (loading) {
         return <LoadingScreen />
     }
