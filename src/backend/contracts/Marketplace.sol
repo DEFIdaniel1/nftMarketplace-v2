@@ -69,7 +69,7 @@ contract Marketplace is ReentrancyGuard, Ownable {
         return s_feePercent = _newFee;
     }
 
-    // Required for safeTransfer functions. 
+    // Required for safeTransfer functions.
     // Informs the sender that we can receive ERC721 tokens
     function onERC721Received(
         address,
@@ -80,6 +80,13 @@ contract Marketplace is ReentrancyGuard, Ownable {
         return IERC721Receiver.onERC721Received.selector;
     }
 
+    /**
+     * @notice Function to list NFT on the marketplace for sale
+     * @dev User transfers the NFT to the contract and adds the nft data to the itemsMap
+     * @param _nftContract is address for erc721 contract
+     * @param _tokenId is nft token number
+     * @param _price the listing value the user wants to list the NFT for
+     */
     function listNFT(
         IERC721 _nftContract,
         uint256 _tokenId,
@@ -89,8 +96,6 @@ contract Marketplace is ReentrancyGuard, Ownable {
             revert Marketplace__PriceMustBeMoreThanZero();
         }
         s_itemCount++;
-
-        // Transfers NFT to contract
         _nftContract.safeTransferFrom(msg.sender, address(this), _tokenId);
         itemsMap[s_itemCount] = Item(
             s_itemCount,
@@ -103,6 +108,11 @@ contract Marketplace is ReentrancyGuard, Ownable {
         emit Listing(s_itemCount, _nftContract, _tokenId, _price, msg.sender);
     }
 
+    /**
+     * @notice Function for user to purhcase the NFT from the marketplace
+     * @dev Msg.value will be split between the marketplace and nft seller
+     * @dev Checks if item is listed, msg.value contains enough ETH, if item has already sold
+     */
     function purchaseNFT(uint256 _itemId) external payable nonReentrant {
         uint256 totalPrice = getTotalPrice(_itemId);
         Item storage item = itemsMap[_itemId];
@@ -115,12 +125,10 @@ contract Marketplace is ReentrancyGuard, Ownable {
         if (item.sold) {
             revert Marketplace__ItemAlreadySold();
         }
-        // Transfer funds from buyer
-        i_feeAccount.transfer(totalPrice - item.price);
-        item.seller.transfer(item.price);
+        i_feeAccount.transfer(totalPrice - item.price); //transfer funds to marketplace
+        item.seller.transfer(item.price); //transfer funds to seller
         item.sold = true;
-        // Transfer NFT - Last step to prevent reentrancy
-        item.nft.safeTransferFrom(address(this), msg.sender, item.tokenId);
+        item.nft.safeTransferFrom(address(this), msg.sender, item.tokenId); // Transfer NFT - Last step to prevent reentrancy
         emit Purchased(_itemId, item.nft, item.tokenId, item.price, item.seller, msg.sender);
     }
 
